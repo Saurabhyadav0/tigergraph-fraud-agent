@@ -1,0 +1,87 @@
+{
+  "case_id": "HHG-002",
+  "case": {
+    "status": "closed_fraud",
+    "verdict": "fraud",
+    "fraud_probability": 0.9,
+    "pattern": "card_not_present_fraud",
+    "pattern_description": "",
+    "affected_txn_ids": [
+      "3478782"
+    ],
+    "first_suspicious_txn_id": "3478782",
+    "connected_card_ids": [],
+    "connected_device_profiles": [],
+    "exposure_usd": 292.36,
+    "evidence": [
+      {
+        "claim": "Flagged transaction 3478782: $292.36, online, product C, billing region nan, bank risk score 0.79",
+        "source": "graph",
+        "ref": "lookup:transaction(3478782)",
+        "entity_ids": [
+          "3478782"
+        ]
+      },
+      {
+        "claim": "Amount $292.36 is 10.4 standard deviations from customer C11891's historical mean (n=43)",
+        "source": "graph",
+        "ref": "query:customer_history(C11891)",
+        "entity_ids": []
+      },
+      {
+        "claim": "Found 1 related closed case(s) in case memory: CC-4160 (confirmed_fraud/card_not_present_fraud)",
+        "source": "graph",
+        "ref": "query:similar_closed_cases",
+        "entity_ids": [
+          "CC-4160"
+        ]
+      }
+    ],
+    "similar_prior_cases": [
+      "CC-4160"
+    ],
+    "summary": "Assessed as card not present fraud at 90% confidence. Bank risk model scored this transaction 0.79 (an input, discounted per policy since high scores are often legitimate). Amount is a 10.4-sigma outlier vs. this customer's history. Case-memory prior adjustment: +0.20 from this card's own closed-case history. Exposure $292.36 across 1 transaction(s).",
+    "written_to_graph": true,
+    "graph_case_id": "HHG-002"
+  },
+  "evidence_requests": [],
+  "next_best_actions": {
+    "initial": [
+      {
+        "action": "BLOCK_CARD",
+        "route": "L1",
+        "reason": "R2: confirmed/strongly suspected fraud"
+      },
+      {
+        "action": "CREATE_CASE",
+        "route": "auto",
+        "reason": "3a: fraud probability at/above 0.30"
+      }
+    ],
+    "final": [
+      {
+        "action": "BLOCK_CARD",
+        "route": "L1",
+        "reason": "R2: confirmed/strongly suspected fraud"
+      },
+      {
+        "action": "CREATE_CASE",
+        "route": "auto",
+        "reason": "3a: fraud probability at/above 0.30"
+      }
+    ],
+    "what_changed": "nothing"
+  },
+  "sar": {
+    "file": false,
+    "reason": "confirmed/suspected fraud but none of the SAR trigger conditions (3a) are met",
+    "narrative": "",
+    "subjects": [],
+    "total_amount_usd": 0,
+    "activity_dates": []
+  },
+  "stop_reason": "Fraud probability 0.90 >= 0.85 with corroborating evidence.",
+  "tool_calls": 6,
+  "tokens": 0,
+  "latency_s": 0.92
+}

@@ -1,0 +1,157 @@
+{
+  "case_id": "HHG-019",
+  "case": {
+    "status": "closed_fraud",
+    "verdict": "fraud",
+    "fraud_probability": 0.95,
+    "pattern": "out_of_region_use",
+    "pattern_description": "",
+    "affected_txn_ids": [
+      "3503878"
+    ],
+    "first_suspicious_txn_id": "3503878",
+    "connected_card_ids": [
+      "C01104-K2",
+      "C01983-K1",
+      "C06224-K2",
+      "C11309-K1"
+    ],
+    "connected_device_profiles": [
+      "dev_f1763b597e38e95a"
+    ],
+    "exposure_usd": 99.92,
+    "evidence": [
+      {
+        "claim": "Flagged transaction 3503878: $99.92, online, product R, billing region 264.0, bank risk score 0.9",
+        "source": "graph",
+        "ref": "lookup:transaction(3503878)",
+        "entity_ids": [
+          "3503878"
+        ]
+      },
+      {
+        "claim": "Device profile dev_f1763b597e38e95a also used by 4 other card(s) in the last 30 days: ['C01104-K2', 'C01983-K1', 'C06224-K2', 'C11309-K1']",
+        "source": "graph",
+        "ref": "query:device_neighbors(device_id=dev_f1763b597e38e95a)",
+        "entity_ids": [
+          "C01104-K2",
+          "C01983-K1",
+          "C06224-K2",
+          "C11309-K1"
+        ]
+      },
+      {
+        "claim": "Device profile dev_f1763b597e38e95a marked New (id_15) for this account",
+        "source": "graph",
+        "ref": "lookup:transaction(3503878)",
+        "entity_ids": [
+          "3503878"
+        ]
+      },
+      {
+        "claim": "Amount $99.92 is -0.4 standard deviations from customer C07987's historical mean (n=247)",
+        "source": "graph",
+        "ref": "query:customer_history(C07987)",
+        "entity_ids": []
+      },
+      {
+        "claim": "Found 8 related closed case(s) in case memory: CC-2011 (confirmed_fraud/out_of_region_use), CC-2087 (cleared/none), CC-2860 (confirmed_fraud/card_not_present_fraud), CC-5026 (confirmed_fraud/out_of_region_use), CC-4268 (confirmed_fraud/card_not_present_fraud)",
+        "source": "graph",
+        "ref": "query:similar_closed_cases",
+        "entity_ids": [
+          "CC-2011",
+          "CC-2087",
+          "CC-2860",
+          "CC-5026",
+          "CC-4268",
+          "CC-4294",
+          "CC-4309",
+          "CC-4311"
+        ]
+      }
+    ],
+    "similar_prior_cases": [
+      "CC-2011",
+      "CC-2087",
+      "CC-2860",
+      "CC-5026",
+      "CC-4268",
+      "CC-4294",
+      "CC-4309",
+      "CC-4311"
+    ],
+    "summary": "Assessed as out of region use at 95% confidence. Bank risk model scored this transaction 0.90 (an input, discounted per policy since high scores are often legitimate). 4 other card(s) share this transaction's device profile. Case-memory prior adjustment: +0.20 from this card's own closed-case history. Exposure $99.92 across 1 transaction(s).",
+    "written_to_graph": true,
+    "graph_case_id": "HHG-019"
+  },
+  "evidence_requests": [],
+  "next_best_actions": {
+    "initial": [
+      {
+        "action": "BLOCK_CARD",
+        "route": "L1",
+        "reason": "R2: confirmed/strongly suspected fraud"
+      },
+      {
+        "action": "CREATE_CASE",
+        "route": "auto",
+        "reason": "3a: fraud probability at/above 0.30"
+      },
+      {
+        "action": "FILE_REPORT",
+        "route": "L2",
+        "reason": "3a/R6: activity connects to a shared device profile / region cluster / ring"
+      },
+      {
+        "action": "MONITOR_CONNECTED_CARDS",
+        "route": "auto",
+        "reason": "R6: shared origin with 4 other card(s)"
+      }
+    ],
+    "final": [
+      {
+        "action": "BLOCK_CARD",
+        "route": "L1",
+        "reason": "R2: confirmed/strongly suspected fraud"
+      },
+      {
+        "action": "CREATE_CASE",
+        "route": "auto",
+        "reason": "3a: fraud probability at/above 0.30"
+      },
+      {
+        "action": "FILE_REPORT",
+        "route": "L2",
+        "reason": "3a/R6: activity connects to a shared device profile / region cluster / ring"
+      },
+      {
+        "action": "MONITOR_CONNECTED_CARDS",
+        "route": "auto",
+        "reason": "R6: shared origin with 4 other card(s)"
+      }
+    ],
+    "what_changed": "nothing"
+  },
+  "sar": {
+    "file": true,
+    "reason": "activity connects to a shared device profile / region cluster / ring",
+    "narrative": "Customer C07987, card C07987-K2. 1 transaction(s) totaling $99.92, pattern: out of region use. Activity dated 2016-12-01 to 2016-12-01. Channel: online; billing region 264.0. How: bank risk model scored this transaction 0.90 (an input, discounted per policy since high scores are often legitimate) [shared_origin] 4 other card(s) share this transaction's device profile case-memory prior adjustment: +0.20 from this card's own closed-case history no fresh pattern signal fired; classified from this card's historical pattern (out_of_region_use) Filed per policy: activity connects to a shared device profile / region cluster / ring.",
+    "subjects": [
+      "C01104-K2",
+      "C01983-K1",
+      "C06224-K2",
+      "C07987",
+      "C07987-K2",
+      "C11309-K1"
+    ],
+    "total_amount_usd": 99.92,
+    "activity_dates": [
+      "2016-12-01",
+      "2016-12-01"
+    ]
+  },
+  "stop_reason": "Fraud probability 0.95 >= 0.85 with corroborating evidence.",
+  "tool_calls": 6,
+  "tokens": 0,
+  "latency_s": 4.74
+}

@@ -1,0 +1,221 @@
+{
+  "case_id": "HHG-005",
+  "case": {
+    "status": "closed_legitimate",
+    "verdict": "legitimate",
+    "fraud_probability": 0.05,
+    "pattern": "none",
+    "pattern_description": "",
+    "affected_txn_ids": [],
+    "first_suspicious_txn_id": "",
+    "connected_card_ids": [],
+    "connected_device_profiles": [],
+    "exposure_usd": 0.0,
+    "evidence": [
+      {
+        "claim": "Flagged transaction 3523199: $100.07, online, product R, billing region 330.0, bank risk score 0.54",
+        "source": "graph",
+        "ref": "lookup:transaction(3523199)",
+        "entity_ids": [
+          "3523199"
+        ]
+      },
+      {
+        "claim": "Device profile dev_fe5d00fa203ff498 also used by 111 other card(s) in the last 30 days (a common device model/config -- not treated as a ring signal on its own): ['C00329-K2', 'C00450-K1', 'C00750-K2', 'C00854-K2', 'C00913-K1']",
+        "source": "graph",
+        "ref": "query:device_neighbors(device_id=dev_fe5d00fa203ff498)",
+        "entity_ids": [
+          "C00329-K2",
+          "C00450-K1",
+          "C00750-K2",
+          "C00854-K2",
+          "C00913-K1",
+          "C01104-K2",
+          "C01128-K2",
+          "C01138-K2",
+          "C01154-K1",
+          "C01155-K2",
+          "C01599-K1",
+          "C01619-K1",
+          "C01782-K2",
+          "C01909-K2",
+          "C01953-K2",
+          "C01982-K2",
+          "C02024-K1",
+          "C02231-K1",
+          "C02250-K2",
+          "C02342-K1",
+          "C02354-K2",
+          "C02393-K2",
+          "C02716-K2",
+          "C02780-K2",
+          "C03040-K2",
+          "C03047-K2",
+          "C03066-K1",
+          "C03096-K1",
+          "C03218-K2",
+          "C03273-K1",
+          "C03278-K2",
+          "C03412-K1",
+          "C03575-K2",
+          "C03623-K1",
+          "C03787-K1",
+          "C04108-K2",
+          "C04117-K2",
+          "C04173-K1",
+          "C04194-K1",
+          "C04513-K1",
+          "C04547-K1",
+          "C04803-K1",
+          "C04942-K1",
+          "C05063-K1",
+          "C05345-K1",
+          "C05385-K2",
+          "C05551-K2",
+          "C05690-K1",
+          "C05704-K2",
+          "C05958-K1",
+          "C06005-K1",
+          "C06208-K1",
+          "C06220-K1",
+          "C06224-K2",
+          "C06279-K1",
+          "C06296-K1",
+          "C06481-K1",
+          "C06568-K1",
+          "C06708-K2",
+          "C06835-K2",
+          "C06947-K2",
+          "C06962-K2",
+          "C07212-K2",
+          "C07355-K1",
+          "C07518-K2",
+          "C07552-K1",
+          "C07612-K1",
+          "C07615-K1",
+          "C07847-K2",
+          "C07987-K2",
+          "C08299-K1",
+          "C08348-K1",
+          "C08410-K1",
+          "C08489-K2",
+          "C08542-K1",
+          "C08780-K1",
+          "C08918-K2",
+          "C08925-K1",
+          "C08989-K2",
+          "C08999-K1",
+          "C09149-K1",
+          "C09363-K2",
+          "C09468-K2",
+          "C09800-K2",
+          "C09872-K1",
+          "C10542-K1",
+          "C10948-K1",
+          "C10955-K2",
+          "C10964-K1",
+          "C11000-K2",
+          "C11164-K1",
+          "C11257-K1",
+          "C11496-K2",
+          "C11522-K2",
+          "C11539-K2",
+          "C11898-K1",
+          "C11929-K2",
+          "C12166-K2",
+          "C12230-K1",
+          "C12267-K2",
+          "C12450-K1",
+          "C12484-K1",
+          "C12585-K1",
+          "C12598-K2",
+          "C12748-K2",
+          "C12942-K2",
+          "C12961-K2",
+          "C13058-K2",
+          "C13067-K1",
+          "C13316-K1",
+          "C13440-K2"
+        ]
+      },
+      {
+        "claim": "Device profile dev_fe5d00fa203ff498 marked New (id_15) for this account",
+        "source": "graph",
+        "ref": "lookup:transaction(3523199)",
+        "entity_ids": [
+          "3523199"
+        ]
+      },
+      {
+        "claim": "Amount $100.07 is -0.3 standard deviations from customer C02923's historical mean (n=91)",
+        "source": "graph",
+        "ref": "query:customer_history(C02923)",
+        "entity_ids": []
+      },
+      {
+        "claim": "Found 8 related closed case(s) in case memory: CC-2400 (confirmed_fraud/account_takeover), CC-2717 (confirmed_fraud/account_takeover), CC-2857 (confirmed_fraud/account_takeover), CC-1672 (confirmed_fraud/card_not_present_new_device), CC-4571 (confirmed_fraud/card_not_present_fraud)",
+        "source": "graph",
+        "ref": "query:similar_closed_cases",
+        "entity_ids": [
+          "CC-2400",
+          "CC-2717",
+          "CC-2857",
+          "CC-1672",
+          "CC-4571",
+          "CC-4583",
+          "CC-4613",
+          "CC-4625"
+        ]
+      }
+    ],
+    "similar_prior_cases": [
+      "CC-2400",
+      "CC-2717",
+      "CC-2857",
+      "CC-1672",
+      "CC-4571",
+      "CC-4583",
+      "CC-4613",
+      "CC-4625"
+    ],
+    "summary": "Assessed as legitimate at 95% confidence. Bank risk model scored this transaction 0.54 (an input, discounted per policy since high scores are often legitimate). Customer confirmed making the transaction.",
+    "written_to_graph": true,
+    "graph_case_id": "HHG-005"
+  },
+  "evidence_requests": [
+    {
+      "type": "customer_validation",
+      "asked_after_step": 1,
+      "assumed_response": "Customer confirms they made this transaction themselves. (Simulated: no real customer channel exists for this benchmark; the assumption tracks the initial assessed fraud probability -- see agent/investigate.py docstring.)"
+    }
+  ],
+  "next_best_actions": {
+    "initial": [
+      {
+        "action": "VERIFY_WITH_CUSTOMER",
+        "route": "auto",
+        "reason": "R1: probability 0.47 on a single signal, confirm before blocking"
+      }
+    ],
+    "final": [
+      {
+        "action": "CLOSE_NO_FRAUD",
+        "route": "auto",
+        "reason": "R3: customer confirmed the transaction"
+      }
+    ],
+    "what_changed": "Assumed customer confirmation moved fraud_probability from 0.47 to 0.05, changing verdict from uncertain to legitimate."
+  },
+  "sar": {
+    "file": false,
+    "reason": "verdict is not fraud",
+    "narrative": "",
+    "subjects": [],
+    "total_amount_usd": 0,
+    "activity_dates": []
+  },
+  "stop_reason": "Simulated verification response settled the verdict; no further evidence would change the action.",
+  "tool_calls": 7,
+  "tokens": 0,
+  "latency_s": 3.02
+}

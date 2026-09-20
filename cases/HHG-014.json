@@ -1,0 +1,260 @@
+{
+  "case_id": "HHG-014",
+  "case": {
+    "status": "closed_fraud",
+    "verdict": "fraud",
+    "fraud_probability": 0.75,
+    "pattern": "undocumented",
+    "pattern_description": "Activity was scored likely fraudulent but does not match any of the five documented patterns (signals: analyst request: \"Analyst request: several cards this month show purchases from the same unusual device profile. Review transaction 3478561 on card C13487-K1 and look for related activity.\"; [shared_origin] 34 other card(s) share this transaction's device profile).",
+    "affected_txn_ids": [
+      "3478561"
+    ],
+    "first_suspicious_txn_id": "3478561",
+    "connected_card_ids": [
+      "C00255-K1",
+      "C01935-K1",
+      "C01996-K2",
+      "C02910-K1",
+      "C02975-K1",
+      "C03528-K1",
+      "C03676-K2",
+      "C03744-K1",
+      "C04108-K2",
+      "C04311-K1",
+      "C06031-K2",
+      "C06617-K1",
+      "C06650-K2",
+      "C07485-K1",
+      "C07762-K1",
+      "C08972-K2",
+      "C09174-K1",
+      "C09354-K1",
+      "C09733-K1",
+      "C09998-K1",
+      "C10193-K2",
+      "C10326-K1",
+      "C10350-K1",
+      "C10955-K2",
+      "C11082-K1",
+      "C11468-K2",
+      "C11670-K2",
+      "C11702-K1",
+      "C12033-K1",
+      "C12132-K2",
+      "C12574-K1",
+      "C12645-K1",
+      "C12796-K1",
+      "C12900-K2"
+    ],
+    "connected_device_profiles": [
+      "dev_7e7ac97b83779f0e"
+    ],
+    "exposure_usd": 74.96,
+    "evidence": [
+      {
+        "claim": "Flagged transaction 3478561: $74.96, online, product C, billing region 191.0, bank risk score 0.05",
+        "source": "graph",
+        "ref": "lookup:transaction(3478561)",
+        "entity_ids": [
+          "3478561"
+        ]
+      },
+      {
+        "claim": "Device profile dev_7e7ac97b83779f0e also used by 51 other card(s) in the last 30 days (a common device model/config -- not treated as a ring signal on its own): ['C00255-K1', 'C01289-K1', 'C01935-K1', 'C01996-K2', 'C02910-K1']",
+        "source": "graph",
+        "ref": "query:device_neighbors(device_id=dev_7e7ac97b83779f0e)",
+        "entity_ids": [
+          "C00255-K1",
+          "C01289-K1",
+          "C01935-K1",
+          "C01996-K2",
+          "C02910-K1",
+          "C02975-K1",
+          "C03528-K1",
+          "C03551-K1",
+          "C03676-K2",
+          "C03744-K1",
+          "C04108-K2",
+          "C04274-K1",
+          "C04311-K1",
+          "C05448-K1",
+          "C06031-K2",
+          "C06197-K1",
+          "C06617-K1",
+          "C06650-K2",
+          "C06710-K1",
+          "C07472-K1",
+          "C07485-K1",
+          "C07762-K1",
+          "C08112-K1",
+          "C08168-K1",
+          "C08972-K2",
+          "C09049-K1",
+          "C09174-K1",
+          "C09195-K1",
+          "C09354-K1",
+          "C09733-K1",
+          "C09906-K1",
+          "C09975-K1",
+          "C09998-K1",
+          "C10020-K1",
+          "C10193-K2",
+          "C10326-K1",
+          "C10350-K1",
+          "C10955-K2",
+          "C11082-K1",
+          "C11468-K2",
+          "C11670-K2",
+          "C11687-K1",
+          "C11702-K1",
+          "C12033-K1",
+          "C12132-K2",
+          "C12395-K1",
+          "C12574-K1",
+          "C12645-K1",
+          "C12796-K1",
+          "C12900-K2",
+          "C13291-K1"
+        ]
+      },
+      {
+        "claim": "Device profile dev_7e7ac97b83779f0e marked New (id_15) for this account",
+        "source": "graph",
+        "ref": "lookup:transaction(3478561)",
+        "entity_ids": [
+          "3478561"
+        ]
+      },
+      {
+        "claim": "Amount $74.96 is 0.5 standard deviations from customer C13487's historical mean (n=84)",
+        "source": "graph",
+        "ref": "query:customer_history(C13487)",
+        "entity_ids": []
+      },
+      {
+        "claim": "Found 8 related closed case(s) in case memory: CC-2649 (confirmed_fraud/undocumented), CC-2971 (confirmed_fraud/undocumented), CC-2985 (confirmed_fraud/undocumented), CC-3035 (confirmed_fraud/undocumented), CC-3870 (confirmed_fraud/card_not_present_fraud)",
+        "source": "graph",
+        "ref": "query:similar_closed_cases",
+        "entity_ids": [
+          "CC-2649",
+          "CC-2971",
+          "CC-2985",
+          "CC-3035",
+          "CC-3870",
+          "CC-3887",
+          "CC-4038",
+          "CC-4086"
+        ]
+      }
+    ],
+    "similar_prior_cases": [
+      "CC-2649",
+      "CC-2971",
+      "CC-2985",
+      "CC-3035",
+      "CC-3870",
+      "CC-3887",
+      "CC-4038",
+      "CC-4086"
+    ],
+    "summary": "Assessed as undocumented at 75% confidence. Analyst request: \"Analyst request: several cards this month show purchases from the same unusual device profile. Review transaction 3478561 on card C13487-K1 and look for related activity.\". 34 other card(s) share this transaction's device profile. Analyst corroborated the shared-device ring. Exposure $74.96 across 1 transaction(s).",
+    "written_to_graph": true,
+    "graph_case_id": "HHG-014"
+  },
+  "evidence_requests": [
+    {
+      "type": "analyst_info",
+      "asked_after_step": 1,
+      "assumed_response": "Analyst confirms 34 connected card(s) on this device profile show their own confirmed-fraud history. (Simulated: no real analyst channel exists for this benchmark.)"
+    }
+  ],
+  "next_best_actions": {
+    "initial": [
+      {
+        "action": "VERIFY_WITH_CUSTOMER",
+        "route": "auto",
+        "reason": "R1: probability 0.65 on a single signal, confirm before blocking"
+      }
+    ],
+    "final": [
+      {
+        "action": "BLOCK_CARD",
+        "route": "L1",
+        "reason": "R2: confirmed/strongly suspected fraud"
+      },
+      {
+        "action": "CREATE_CASE",
+        "route": "auto",
+        "reason": "3a: fraud probability at/above 0.30"
+      },
+      {
+        "action": "FILE_REPORT",
+        "route": "L2",
+        "reason": "3a/R6: activity connects to a shared device profile / region cluster / ring; undocumented but coordinated/repeated pattern (R9)"
+      },
+      {
+        "action": "MONITOR_CONNECTED_CARDS",
+        "route": "auto",
+        "reason": "R6: shared origin with 34 other card(s)"
+      },
+      {
+        "action": "ESCALATE_TO_ANALYST",
+        "route": "auto",
+        "reason": "R9: undocumented but coordinated/repeated pattern"
+      }
+    ],
+    "what_changed": "Analyst corroboration of the shared-device ring moved the verdict to fraud."
+  },
+  "sar": {
+    "file": true,
+    "reason": "activity connects to a shared device profile / region cluster / ring; undocumented but coordinated/repeated pattern (R9)",
+    "narrative": "Customer C13487, card C13487-K1. 1 transaction(s) totaling $74.96, pattern: an undocumented but coordinated pattern. Activity dated 2016-11-22 to 2016-11-22. Channel: online; billing region 191.0. How: analyst request: \"Analyst request: several cards this month show purchases from the same unusual device profile. Review transaction 3478561 on card C13487-K1 and look for related activity.\" [shared_origin] 34 other card(s) share this transaction's device profile analyst corroborated the shared-device ring Filed per policy: activity connects to a shared device profile / region cluster / ring; undocumented but coordinated/repeated pattern (R9).",
+    "subjects": [
+      "C00255-K1",
+      "C01935-K1",
+      "C01996-K2",
+      "C02910-K1",
+      "C02975-K1",
+      "C03528-K1",
+      "C03676-K2",
+      "C03744-K1",
+      "C04108-K2",
+      "C04311-K1",
+      "C06031-K2",
+      "C06617-K1",
+      "C06650-K2",
+      "C07485-K1",
+      "C07762-K1",
+      "C08972-K2",
+      "C09174-K1",
+      "C09354-K1",
+      "C09733-K1",
+      "C09998-K1",
+      "C10193-K2",
+      "C10326-K1",
+      "C10350-K1",
+      "C10955-K2",
+      "C11082-K1",
+      "C11468-K2",
+      "C11670-K2",
+      "C11702-K1",
+      "C12033-K1",
+      "C12132-K2",
+      "C12574-K1",
+      "C12645-K1",
+      "C12796-K1",
+      "C12900-K2",
+      "C13487",
+      "C13487-K1"
+    ],
+    "total_amount_usd": 74.96,
+    "activity_dates": [
+      "2016-11-22",
+      "2016-11-22"
+    ]
+  },
+  "stop_reason": "Simulated verification response settled the verdict; no further evidence would change the action.",
+  "tool_calls": 7,
+  "tokens": 0,
+  "latency_s": 15.34
+}

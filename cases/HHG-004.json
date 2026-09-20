@@ -1,0 +1,150 @@
+{
+  "case_id": "HHG-004",
+  "case": {
+    "status": "closed_fraud",
+    "verdict": "fraud",
+    "fraud_probability": 0.98,
+    "pattern": "card_not_present_new_device",
+    "pattern_description": "",
+    "affected_txn_ids": [
+      "3583227"
+    ],
+    "first_suspicious_txn_id": "3583227",
+    "connected_card_ids": [
+      "C03095-K2",
+      "C04248-K2",
+      "C05031-K2",
+      "C07518-K2"
+    ],
+    "connected_device_profiles": [
+      "dev_b3a050b63b97ce3f"
+    ],
+    "exposure_usd": 128.33,
+    "evidence": [
+      {
+        "claim": "Flagged transaction 3583227: $128.33, online, product C, billing region nan, bank risk score 0.34",
+        "source": "graph",
+        "ref": "lookup:transaction(3583227)",
+        "entity_ids": [
+          "3583227"
+        ]
+      },
+      {
+        "claim": "Device profile dev_b3a050b63b97ce3f also used by 5 other card(s) in the last 30 days (a common device model/config -- not treated as a ring signal on its own): ['C02222-K1', 'C03095-K2', 'C04248-K2', 'C05031-K2', 'C07518-K2']",
+        "source": "graph",
+        "ref": "query:device_neighbors(device_id=dev_b3a050b63b97ce3f)",
+        "entity_ids": [
+          "C02222-K1",
+          "C03095-K2",
+          "C04248-K2",
+          "C05031-K2",
+          "C07518-K2"
+        ]
+      },
+      {
+        "claim": "Device profile dev_b3a050b63b97ce3f marked New (id_15) for this account",
+        "source": "graph",
+        "ref": "lookup:transaction(3583227)",
+        "entity_ids": [
+          "3583227"
+        ]
+      },
+      {
+        "claim": "Amount $128.33 is 3.4 standard deviations from customer C08106's historical mean (n=215)",
+        "source": "graph",
+        "ref": "query:customer_history(C08106)",
+        "entity_ids": []
+      },
+      {
+        "claim": "Found 4 related closed case(s) in case memory: CC-0696 (cleared/none), CC-1736 (confirmed_fraud/card_not_present_fraud), CC-2121 (confirmed_fraud/card_not_present_fraud), CC-3778 (confirmed_fraud/card_not_present_fraud)",
+        "source": "graph",
+        "ref": "query:similar_closed_cases",
+        "entity_ids": [
+          "CC-0696",
+          "CC-1736",
+          "CC-2121",
+          "CC-3778"
+        ]
+      }
+    ],
+    "similar_prior_cases": [
+      "CC-0696",
+      "CC-1736",
+      "CC-2121",
+      "CC-3778"
+    ],
+    "summary": "Assessed as card not present new device at 98% confidence. Customer proactively reported the transaction: \"Customer C08106 message: 'I never made this $128.33 purchase. Please check my card.' Refers to 3583227.\". Amount is a 3.4-sigma outlier vs. this customer's history; 8 transactions on this card within 48 hours; from a device profile marked New for this account. 4 other card(s) share this transaction's device profile. Exposure $128.33 across 1 transaction(s).",
+    "written_to_graph": true,
+    "graph_case_id": "HHG-004"
+  },
+  "evidence_requests": [],
+  "next_best_actions": {
+    "initial": [
+      {
+        "action": "BLOCK_CARD",
+        "route": "L1",
+        "reason": "R2: confirmed/strongly suspected fraud"
+      },
+      {
+        "action": "CREATE_CASE",
+        "route": "auto",
+        "reason": "3a: fraud probability at/above 0.30"
+      },
+      {
+        "action": "FILE_REPORT",
+        "route": "L2",
+        "reason": "3a/R6: activity connects to a shared device profile / region cluster / ring"
+      },
+      {
+        "action": "MONITOR_CONNECTED_CARDS",
+        "route": "auto",
+        "reason": "R6: shared origin with 4 other card(s)"
+      }
+    ],
+    "final": [
+      {
+        "action": "BLOCK_CARD",
+        "route": "L1",
+        "reason": "R2: confirmed/strongly suspected fraud"
+      },
+      {
+        "action": "CREATE_CASE",
+        "route": "auto",
+        "reason": "3a: fraud probability at/above 0.30"
+      },
+      {
+        "action": "FILE_REPORT",
+        "route": "L2",
+        "reason": "3a/R6: activity connects to a shared device profile / region cluster / ring"
+      },
+      {
+        "action": "MONITOR_CONNECTED_CARDS",
+        "route": "auto",
+        "reason": "R6: shared origin with 4 other card(s)"
+      }
+    ],
+    "what_changed": "nothing"
+  },
+  "sar": {
+    "file": true,
+    "reason": "activity connects to a shared device profile / region cluster / ring",
+    "narrative": "Customer C08106, card C08106-K1. 1 transaction(s) totaling $128.33, pattern: card not present new device. Activity dated 2016-12-29 to 2016-12-29. Channel: online; billing region nan. How: customer proactively reported the transaction: \"Customer C08106 message: 'I never made this $128.33 purchase. Please check my card.' Refers to 3583227.\" [card_not_present_new_device] amount is a 3.4-sigma outlier vs. this customer's history; 8 transactions on this card within 48 hours; from a device profile marked New for this account [shared_origin] 4 other card(s) share this transaction's device profile case-memory prior adjustment: +0.20 from this card's own closed-case history Filed per policy: activity connects to a shared device profile / region cluster / ring.",
+    "subjects": [
+      "C03095-K2",
+      "C04248-K2",
+      "C05031-K2",
+      "C07518-K2",
+      "C08106",
+      "C08106-K1"
+    ],
+    "total_amount_usd": 128.33,
+    "activity_dates": [
+      "2016-12-29",
+      "2016-12-29"
+    ]
+  },
+  "stop_reason": "Fraud probability 0.98 >= 0.85 with corroborating evidence.",
+  "tool_calls": 6,
+  "tokens": 0,
+  "latency_s": 4.23
+}

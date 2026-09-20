@@ -1,0 +1,162 @@
+{
+  "case_id": "HHG-015",
+  "case": {
+    "status": "closed_fraud",
+    "verdict": "fraud",
+    "fraud_probability": 0.98,
+    "pattern": "card_not_present_new_device",
+    "pattern_description": "",
+    "affected_txn_ids": [
+      "3464869"
+    ],
+    "first_suspicious_txn_id": "3464869",
+    "connected_card_ids": [
+      "C01155-K2",
+      "C05292-K1",
+      "C05704-K2",
+      "C11227-K2",
+      "C11413-K1"
+    ],
+    "connected_device_profiles": [
+      "dev_cbb47ea1e4a77274"
+    ],
+    "exposure_usd": 599.94,
+    "evidence": [
+      {
+        "claim": "Flagged transaction 3464869: $599.94, online, product R, billing region 327.0, bank risk score 0.77",
+        "source": "graph",
+        "ref": "lookup:transaction(3464869)",
+        "entity_ids": [
+          "3464869"
+        ]
+      },
+      {
+        "claim": "Device profile dev_cbb47ea1e4a77274 also used by 7 other card(s) in the last 30 days (a common device model/config -- not treated as a ring signal on its own): ['C00681-K1', 'C01155-K2', 'C02881-K1', 'C05292-K1', 'C05704-K2']",
+        "source": "graph",
+        "ref": "query:device_neighbors(device_id=dev_cbb47ea1e4a77274)",
+        "entity_ids": [
+          "C00681-K1",
+          "C01155-K2",
+          "C02881-K1",
+          "C05292-K1",
+          "C05704-K2",
+          "C11227-K2",
+          "C11413-K1"
+        ]
+      },
+      {
+        "claim": "Device profile dev_cbb47ea1e4a77274 marked New (id_15) for this account",
+        "source": "graph",
+        "ref": "lookup:transaction(3464869)",
+        "entity_ids": [
+          "3464869"
+        ]
+      },
+      {
+        "claim": "Amount $599.94 is 3.6 standard deviations from customer C03042's historical mean (n=78)",
+        "source": "graph",
+        "ref": "query:customer_history(C03042)",
+        "entity_ids": []
+      },
+      {
+        "claim": "Found 8 related closed case(s) in case memory: CC-0615 (confirmed_fraud/card_not_present_new_device), CC-1313 (cleared/none), CC-3886 (confirmed_fraud/card_not_present_new_device), CC-3756 (confirmed_fraud/account_takeover), CC-3772 (confirmed_fraud/card_not_present_fraud)",
+        "source": "graph",
+        "ref": "query:similar_closed_cases",
+        "entity_ids": [
+          "CC-0615",
+          "CC-1313",
+          "CC-3886",
+          "CC-3756",
+          "CC-3772",
+          "CC-3828",
+          "CC-3969",
+          "CC-4141"
+        ]
+      }
+    ],
+    "similar_prior_cases": [
+      "CC-0615",
+      "CC-1313",
+      "CC-3886",
+      "CC-3756",
+      "CC-3772",
+      "CC-3828",
+      "CC-3969",
+      "CC-4141"
+    ],
+    "summary": "Assessed as card not present new device at 98% confidence. Bank risk model scored this transaction 0.77 (an input, discounted per policy since high scores are often legitimate). Amount is a 3.6-sigma outlier vs. this customer's history; 5 transactions on this card within 48 hours; from a device profile marked New for this account. New device profile plus a spending anomaly, on a customer whose history is 23% in-person -- inconsistent with the usual pattern. Exposure $599.94 across 1 transaction(s).",
+    "written_to_graph": true,
+    "graph_case_id": "HHG-015"
+  },
+  "evidence_requests": [],
+  "next_best_actions": {
+    "initial": [
+      {
+        "action": "BLOCK_CARD",
+        "route": "L1",
+        "reason": "R2: confirmed/strongly suspected fraud"
+      },
+      {
+        "action": "CREATE_CASE",
+        "route": "auto",
+        "reason": "3a: fraud probability at/above 0.30"
+      },
+      {
+        "action": "FILE_REPORT",
+        "route": "L2",
+        "reason": "3a/R6: activity connects to a shared device profile / region cluster / ring"
+      },
+      {
+        "action": "MONITOR_CONNECTED_CARDS",
+        "route": "auto",
+        "reason": "R6: shared origin with 5 other card(s)"
+      }
+    ],
+    "final": [
+      {
+        "action": "BLOCK_CARD",
+        "route": "L1",
+        "reason": "R2: confirmed/strongly suspected fraud"
+      },
+      {
+        "action": "CREATE_CASE",
+        "route": "auto",
+        "reason": "3a: fraud probability at/above 0.30"
+      },
+      {
+        "action": "FILE_REPORT",
+        "route": "L2",
+        "reason": "3a/R6: activity connects to a shared device profile / region cluster / ring"
+      },
+      {
+        "action": "MONITOR_CONNECTED_CARDS",
+        "route": "auto",
+        "reason": "R6: shared origin with 5 other card(s)"
+      }
+    ],
+    "what_changed": "nothing"
+  },
+  "sar": {
+    "file": true,
+    "reason": "activity connects to a shared device profile / region cluster / ring",
+    "narrative": "Customer C03042, card C03042-K1. 1 transaction(s) totaling $599.94, pattern: card not present new device. Activity dated 2016-11-17 to 2016-11-17. Channel: online; billing region 327.0. How: bank risk model scored this transaction 0.77 (an input, discounted per policy since high scores are often legitimate) [card_not_present_new_device] amount is a 3.6-sigma outlier vs. this customer's history; 5 transactions on this card within 48 hours; from a device profile marked New for this account [account_takeover] new device profile plus a spending anomaly, on a customer whose history is 23% in-person -- inconsistent with the usual pattern [shared_origin] 5 other card(s) share this transaction's device profile Filed per policy: activity connects to a shared device profile / region cluster / ring.",
+    "subjects": [
+      "C01155-K2",
+      "C03042",
+      "C03042-K1",
+      "C05292-K1",
+      "C05704-K2",
+      "C11227-K2",
+      "C11413-K1"
+    ],
+    "total_amount_usd": 599.94,
+    "activity_dates": [
+      "2016-11-17",
+      "2016-11-17"
+    ]
+  },
+  "stop_reason": "Fraud probability 0.98 >= 0.85 with corroborating evidence.",
+  "tool_calls": 6,
+  "tokens": 0,
+  "latency_s": 5.22
+}

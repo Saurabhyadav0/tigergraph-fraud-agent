@@ -1,0 +1,111 @@
+{
+  "case_id": "HHG-018",
+  "case": {
+    "status": "closed_fraud",
+    "verdict": "fraud",
+    "fraud_probability": 0.75,
+    "pattern": "account_takeover",
+    "pattern_description": "",
+    "affected_txn_ids": [
+      "3491361"
+    ],
+    "first_suspicious_txn_id": "3491361",
+    "connected_card_ids": [],
+    "connected_device_profiles": [],
+    "exposure_usd": 39.08,
+    "evidence": [
+      {
+        "claim": "Flagged transaction 3491361: $39.08, in_person, product W, billing region 126.0, bank risk score 0.48",
+        "source": "graph",
+        "ref": "lookup:transaction(3491361)",
+        "entity_ids": [
+          "3491361"
+        ]
+      },
+      {
+        "claim": "3 transaction(s) on card C02354-K2 within 1 hour of the flagged one; 0 under $5",
+        "source": "graph",
+        "ref": "query:card_window(card_id=C02354-K2, hours=1)",
+        "entity_ids": [
+          "3491361",
+          "3491379",
+          "3491469"
+        ]
+      },
+      {
+        "claim": "Amount $39.08 is -0.5 standard deviations from customer C02354's historical mean (n=7090)",
+        "source": "graph",
+        "ref": "query:customer_history(C02354)",
+        "entity_ids": []
+      },
+      {
+        "claim": "Found 8 related closed case(s) in case memory: CC-0255 (confirmed_fraud/account_takeover), CC-0405 (cleared/none), CC-0454 (confirmed_fraud/account_takeover), CC-0631 (confirmed_fraud/out_of_region_use), CC-1450 (confirmed_fraud/account_takeover)",
+        "source": "graph",
+        "ref": "query:similar_closed_cases",
+        "entity_ids": [
+          "CC-0255",
+          "CC-0405",
+          "CC-0454",
+          "CC-0631",
+          "CC-1450",
+          "CC-1699",
+          "CC-2051",
+          "CC-2187"
+        ]
+      }
+    ],
+    "similar_prior_cases": [
+      "CC-0255",
+      "CC-0405",
+      "CC-0454",
+      "CC-0631",
+      "CC-1450",
+      "CC-1699",
+      "CC-2051",
+      "CC-2187"
+    ],
+    "summary": "Assessed as account takeover at 75% confidence. Customer proactively reported the transaction: \"Customer C02354 message: 'I never made this $39.08 purchase. Please check my card.' Refers to 3491361.\". Case-memory prior adjustment: +0.20 from this card's own closed-case history. No fresh pattern signal fired; classified from this card's historical pattern (account_takeover). Exposure $39.08 across 1 transaction(s).",
+    "written_to_graph": true,
+    "graph_case_id": "HHG-018"
+  },
+  "evidence_requests": [],
+  "next_best_actions": {
+    "initial": [
+      {
+        "action": "BLOCK_CARD",
+        "route": "L1",
+        "reason": "R2: confirmed/strongly suspected fraud"
+      },
+      {
+        "action": "CREATE_CASE",
+        "route": "auto",
+        "reason": "3a: fraud probability at/above 0.30"
+      }
+    ],
+    "final": [
+      {
+        "action": "BLOCK_CARD",
+        "route": "L1",
+        "reason": "R2: confirmed/strongly suspected fraud"
+      },
+      {
+        "action": "CREATE_CASE",
+        "route": "auto",
+        "reason": "3a: fraud probability at/above 0.30"
+      }
+    ],
+    "what_changed": "nothing"
+  },
+  "sar": {
+    "file": false,
+    "reason": "confirmed/suspected fraud but none of the SAR trigger conditions (3a) are met",
+    "narrative": "",
+    "subjects": [],
+    "total_amount_usd": 0,
+    "activity_dates": []
+  },
+  "stop_reason": "Verdict (fraud) reached at probability 0.75 on 3 corroborating signal(s); further evidence-gathering is unlikely to change a decisive action here.",
+  "tool_calls": 6,
+  "tokens": 0,
+  "latency_s": 3.26
+}
