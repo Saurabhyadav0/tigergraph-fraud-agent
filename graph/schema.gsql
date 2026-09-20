@@ -1,0 +1,117 @@
+// ============================================================
+// FraudGraph schema, aligned to the HHGOA_IEEE dataset's suggested
+// schema (see data/HHGOA_IEEE/DATASET_README.md "Suggested graph
+// schema"), with two adjustments:
+//   - "Card" collides with a pre-existing global vertex type in this
+//     TigerGraph instance (a different demo dataset), so it's named
+//     InvCard here.
+//   - PRIMARY_ID_AS_ATTRIBUTE="true" is required on every vertex so
+//     GSQL queries can filter on primary_id directly (confirmed
+//     necessary against this TigerGraph version).
+//
+// Run with: gsql graph/schema.gsql
+// ============================================================
+
+CREATE VERTEX Customer (
+  PRIMARY_ID customer_id STRING
+) WITH PRIMARY_ID_AS_ATTRIBUTE="true"
+
+CREATE VERTEX InvCard (
+  PRIMARY_ID card_id STRING,          // e.g. C08623-K2 (see scripts/build_card_index.py)
+  card1 STRING, card2 STRING, card3 STRING,
+  card4 STRING,                        // network: visa/mastercard/amex/discover
+  card5 STRING,
+  card6 STRING                         // type: credit/debit
+) WITH PRIMARY_ID_AS_ATTRIBUTE="true"
+
+CREATE VERTEX Txn (
+  PRIMARY_ID transaction_id STRING,   // TransactionID
+  transaction_dt INT,                 // TransactionDT
+  ts DATETIME,                        // real timestamp
+  amount DOUBLE,                      // TransactionAmt
+  product_cd STRING,                  // ProductCD
+  channel STRING,                     // in_person | online
+  risk_score DOUBLE,                  // bank fraud-model risk score, input not verdict
+  dist1 DOUBLE, dist2 DOUBLE
+) WITH PRIMARY_ID_AS_ATTRIBUTE="true"
+
+CREATE VERTEX DeviceProfile (
+  PRIMARY_ID device_profile_id STRING, // hash of device_info + os + browser + screen
+  device_type STRING,                  // DeviceType: mobile | desktop
+  device_info STRING,                  // DeviceInfo
+  os STRING,                           // id_30
+  browser STRING,                      // id_31
+  screen STRING,                       // id_33
+  is_new_device STRING,                // id_15: New | Found
+  proxy_flag STRING                    // id_23
+) WITH PRIMARY_ID_AS_ATTRIBUTE="true"
+
+CREATE VERTEX EmailDomain (
+  PRIMARY_ID domain STRING
+) WITH PRIMARY_ID_AS_ATTRIBUTE="true"
+
+CREATE VERTEX BillingRegion (
+  PRIMARY_ID region_code STRING,      // addr1
+  country_code STRING                 // addr2
+) WITH PRIMARY_ID_AS_ATTRIBUTE="true"
+
+CREATE VERTEX ClosedCase (
+  PRIMARY_ID case_id STRING,          // CC-xxxx
+  customer_id STRING,
+  card_id STRING,
+  opened_at DATETIME,
+  closed_at DATETIME,
+  outcome STRING,                     // confirmed_fraud | cleared
+  pattern STRING,
+  first_fraud_txn_id STRING,
+  txn_ids STRING,                     // pipe-separated
+  n_txns INT,
+  exposure_usd DOUBLE,
+  connected_card_ids STRING,          // pipe-separated
+  actions_taken STRING,               // pipe-separated
+  report_filed STRING,                // Yes | No
+  analyst_notes STRING
+) WITH PRIMARY_ID_AS_ATTRIBUTE="true"
+
+// the case our OWN agent opens and progresses -- this is the case
+// memory the hackathon brief refers to ("write it into the graph...
+// the next investigation should be able to find it").
+CREATE VERTEX InvestigationCase (
+  PRIMARY_ID case_id STRING,          // HHG-0xx or CASE-<uuid>
+  status STRING,                      // open | closed_fraud | closed_legitimate | escalated
+  verdict STRING,                     // fraud | legitimate | uncertain
+  fraud_probability DOUBLE,
+  pattern STRING,
+  pattern_description STRING,
+  exposure_usd DOUBLE,
+  summary STRING,
+  stop_reason STRING,
+  created_at DATETIME,
+  updated_at DATETIME
+) WITH PRIMARY_ID_AS_ATTRIBUTE="true"
+
+// ------------------------------------------------------------
+// Edges
+// ------------------------------------------------------------
+CREATE UNDIRECTED EDGE OWNS (FROM Customer, TO InvCard)
+CREATE UNDIRECTED EDGE MADE (FROM InvCard, TO Txn)
+CREATE UNDIRECTED EDGE FROM_DEVICE (FROM Txn, TO DeviceProfile)
+CREATE UNDIRECTED EDGE PURCHASER_EMAIL (FROM Txn, TO EmailDomain)
+CREATE UNDIRECTED EDGE BILLED_IN (FROM Txn, TO BillingRegion)
+
+CREATE DIRECTED EDGE CC_INVOLVES (FROM ClosedCase, TO Txn) WITH REVERSE_EDGE="CC_INVOLVES_REV"
+CREATE DIRECTED EDGE CC_ON_CARD (FROM ClosedCase, TO InvCard) WITH REVERSE_EDGE="CC_ON_CARD_REV"
+CREATE DIRECTED EDGE CC_CONNECTED_TO (FROM ClosedCase, TO InvCard) WITH REVERSE_EDGE="CC_CONNECTED_TO_REV"
+
+CREATE DIRECTED EDGE IC_INVOLVES_TXN (FROM InvestigationCase, TO Txn) WITH REVERSE_EDGE="IC_INVOLVES_TXN_REV"
+CREATE DIRECTED EDGE IC_INVOLVES_CARD (FROM InvestigationCase, TO InvCard) WITH REVERSE_EDGE="IC_INVOLVES_CARD_REV"
+CREATE DIRECTED EDGE IC_USES_DEVICE (FROM InvestigationCase, TO DeviceProfile) WITH REVERSE_EDGE="IC_USES_DEVICE_REV"
+CREATE DIRECTED EDGE IC_SIMILAR_TO_CC (FROM InvestigationCase, TO ClosedCase) WITH REVERSE_EDGE="IC_SIMILAR_TO_CC_REV"
+CREATE UNDIRECTED EDGE IC_SIMILAR_TO_IC (FROM InvestigationCase, TO InvestigationCase, similarity DOUBLE)
+
+CREATE GRAPH FraudGraph (
+  Customer, InvCard, Txn, DeviceProfile, EmailDomain, BillingRegion, ClosedCase, InvestigationCase,
+  OWNS, MADE, FROM_DEVICE, PURCHASER_EMAIL, BILLED_IN,
+  CC_INVOLVES, CC_ON_CARD, CC_CONNECTED_TO,
+  IC_INVOLVES_TXN, IC_INVOLVES_CARD, IC_USES_DEVICE, IC_SIMILAR_TO_CC, IC_SIMILAR_TO_IC
+)
