@@ -93,24 +93,70 @@ trigger (case_pack.csv row)
   -> emit cases/<case_id>.json in the exact required answer format
 ```
 
-## Quickstart
+## Quickstart (end to end, from a fresh clone)
+
+### 1. Python environment
 
 ```bash
+git clone https://github.com/Saurabhyadav0/tigergraph-fraud-agent
+cd tigergraph-fraud-agent
 python3 -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
+```
 
-# .env: TG_HOST, TG_SECRET, TG_GRAPH_NAME already set up against a live
-# Savanna instance (see graph/schema.gsql for what's deployed there).
-# ANTHROPIC_API_KEY is optional -- unset, the rule-based assessor in
-# agent/assess.py runs instead of agent/llm_assess.py.
+### 2. TigerGraph Savanna instance
 
-python scripts/build_card_index.py          # once: derive card_id labels
-python scripts/load_graph_foundation.py     # once: load customers/cards/closed cases
+1. Sign up free at [savanna.tgcloud.io](https://savanna.tgcloud.io), create a workspace
+   (enable **Auto Suspend** and **Auto Resume** in the workspace's Advanced Settings --
+   the brief asks for both, and Auto Resume specifically is off by default).
+2. In the workspace: **Database Secrets → Create Secret** -- copy the value.
+3. Find your workspace's **API host**: open any page inside the workspace (e.g. Query
+   Editor), open DevTools → Network, and look for a request to
+   `https://tg-<id>.<id>.i.tgcloud.io/...` -- that origin (no path) is `TG_HOST`.
+   (The `savanna.tgcloud.io` URL in your browser's address bar is the console, *not*
+   this host -- a common mix-up.)
 
+### 3. Configure
+
+```bash
+cp .env.example .env
+# fill in TG_HOST and TG_SECRET from step 2.
+# TG_GRAPH_NAME defaults to FraudGraph -- fine to leave as-is on a fresh workspace.
+# ANTHROPIC_API_KEY is optional (see "What's real vs. simulated" below).
+```
+
+### 4. Get the HHGOA_IEEE dataset
+
+Not included in this repo (large, and distributed separately to every team). Place
+`transactions.csv`, `identity.csv`, `closed_cases_history.csv`, `case_pack.csv`, and
+`DATASET_README.md` into `data/HHGOA_IEEE/`.
+
+### 5. Deploy the schema and load the graph (one-time)
+
+```bash
+python scripts/deploy_graph.py              # creates schema + installs GSQL queries
+python scripts/build_card_index.py          # derives card_id labels (card_id isn't a raw column)
+python scripts/load_graph_foundation.py     # loads all customers/cards + closed-case history
+```
+
+> **Note:** vertex/edge type names in TigerGraph are global across the whole database,
+> not scoped per graph. If your Savanna workspace already has an unrelated graph using
+> names like `Customer` or `Card`, `deploy_graph.py` will fail with "used by another
+> object" -- use a clean workspace, or rename the types in `graph/schema.gsql` first.
+
+### 6. Run it
+
+```bash
 python scripts/run_case_pack.py             # all 20 cases -> cases/*.json
 python scripts/run_case_pack.py HHG-003     # a single case, for iterating
 
-streamlit run ui/app.py                     # analyst dashboard
+streamlit run ui/app.py                     # analyst dashboard, http://localhost:8501
+```
+
+### 7. (Optional) TigerGraph MCP server
+
+```bash
+python -m agent.mcp_server                  # see "TigerGraph MCP" section below
 ```
 
 ## Calibration: a real finding, not a footnote
@@ -155,9 +201,11 @@ agent/
   policy.py                 action catalog, approval routing, SAR rules
   case_builder.py            assembles the required answer JSON
   graph_client.py             writes investigations into TigerGraph
-  investigate.py               orchestrates one case end to end
-  config.py                     .env-driven configuration
+  mcp_server.py                exposes graph ops as MCP tools (`python -m agent.mcp_server`)
+  investigate.py                 orchestrates one case end to end
+  config.py                       .env-driven configuration
 scripts/
+  deploy_graph.py           one-shot: creates the schema + installs GSQL queries
   build_card_index.py       derives card_id labels (not a raw column -- see
                              the script's docstring for why this needed care)
   load_graph_foundation.py  loads customers/cards/closed-case history
