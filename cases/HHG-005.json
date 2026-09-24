@@ -153,7 +153,17 @@
         "entity_ids": []
       },
       {
-        "claim": "Found 8 related closed case(s) in case memory: CC-2400 (confirmed_fraud/account_takeover), CC-2717 (confirmed_fraud/account_takeover), CC-2857 (confirmed_fraud/account_takeover), CC-1672 (confirmed_fraud/card_not_present_new_device), CC-4571 (confirmed_fraud/card_not_present_fraud)",
+        "claim": "GSQL traversal found 3 closed case(s) directly on or connected to this card (source: graph): CC-2857 (confirmed_fraud/account_takeover), CC-2400 (confirmed_fraud/account_takeover), CC-2717 (confirmed_fraud/account_takeover)",
+        "source": "graph",
+        "ref": "query:similar_closed_cases_graph(card_id=C02923-K1)",
+        "entity_ids": [
+          "CC-2857",
+          "CC-2400",
+          "CC-2717"
+        ]
+      },
+      {
+        "claim": "Found 8 related closed case(s) in case memory (card/device/region blend): CC-2400 (confirmed_fraud/account_takeover), CC-2717 (confirmed_fraud/account_takeover), CC-2857 (confirmed_fraud/account_takeover), CC-1672 (confirmed_fraud/card_not_present_new_device), CC-4571 (confirmed_fraud/card_not_present_fraud)",
         "source": "graph",
         "ref": "query:similar_closed_cases",
         "entity_ids": [
@@ -217,5 +227,5 @@
   "stop_reason": "Simulated verification response settled the verdict; no further evidence would change the action.",
   "tool_calls": 7,
   "tokens": 0,
-  "latency_s": 3.02
+  "latency_s": 3.63
 }

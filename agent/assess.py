@@ -191,12 +191,15 @@ def assess(ev: CaseEvidence, trigger_type: str, trigger_text: str, bank_risk_sco
     # fraud rate (4,665/5,565 closed cases are confirmed_fraud) -- would trigger
     # on almost every case and bias everything toward "fraud". Kept for
     # citation/case-memory display, not for scoring.
-    closed_case_adj = 0.0
-    for c in ev.same_card_closed_cases:
-        if c["case_id"] and c.get("outcome") == "confirmed_fraud":
-            closed_case_adj = max(closed_case_adj, 0.20)
-        elif c.get("outcome") == "cleared":
-            closed_case_adj = min(closed_case_adj, -0.15)
+    # Order-independent by construction (a prior bug here used sequential
+    # max/min overwrites, so a card with BOTH a confirmed-fraud case and a
+    # cleared case silently flipped sign depending on which arrived last in
+    # the query result -- and TigerGraph doesn't guarantee stable ordering
+    # across a UNION). Decide from independent booleans instead: recidivism
+    # (any confirmed fraud on this exact card) outweighs a prior false alarm.
+    has_confirmed = any(c["case_id"] and c.get("outcome") == "confirmed_fraud" for c in ev.same_card_closed_cases)
+    has_cleared = any(c["case_id"] and c.get("outcome") == "cleared" for c in ev.same_card_closed_cases)
+    closed_case_adj = 0.20 if has_confirmed else (-0.15 if has_cleared else 0.0)
     if closed_case_adj:
         signals.append(f"case-memory prior adjustment: {closed_case_adj:+.2f} from this card's own closed-case history")
 

@@ -296,7 +296,16 @@
         "entity_ids": []
       },
       {
-        "claim": "Found 8 related closed case(s) in case memory: CC-2277 (confirmed_fraud/account_takeover), CC-2447 (confirmed_fraud/account_takeover), CC-4412 (confirmed_fraud/out_of_region_use), CC-4422 (confirmed_fraud/account_takeover), CC-4432 (confirmed_fraud/card_not_present_new_device)",
+        "claim": "GSQL traversal found 2 closed case(s) directly on or connected to this card (source: graph): CC-2447 (confirmed_fraud/account_takeover), CC-2277 (confirmed_fraud/account_takeover)",
+        "source": "graph",
+        "ref": "query:similar_closed_cases_graph(card_id=C12265-K2)",
+        "entity_ids": [
+          "CC-2447",
+          "CC-2277"
+        ]
+      },
+      {
+        "claim": "Found 8 related closed case(s) in case memory (card/device/region blend): CC-2277 (confirmed_fraud/account_takeover), CC-2447 (confirmed_fraud/account_takeover), CC-4412 (confirmed_fraud/out_of_region_use), CC-4422 (confirmed_fraud/account_takeover), CC-4432 (confirmed_fraud/card_not_present_new_device)",
         "source": "graph",
         "ref": "query:similar_closed_cases",
         "entity_ids": [
@@ -364,5 +373,5 @@
   "stop_reason": "Fraud probability 0.96 >= 0.85 with corroborating evidence.",
   "tool_calls": 6,
   "tokens": 0,
-  "latency_s": 3.19
+  "latency_s": 3.76
 }

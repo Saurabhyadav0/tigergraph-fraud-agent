@@ -36,7 +36,16 @@
         "entity_ids": []
       },
       {
-        "claim": "Found 3 related closed case(s) in case memory: CC-0003 (cleared/none), CC-2370 (confirmed_fraud/card_not_present_fraud), CC-5402 (confirmed_fraud/out_of_region_use)",
+        "claim": "GSQL traversal found 2 closed case(s) directly on or connected to this card (source: graph): CC-2370 (confirmed_fraud/card_not_present_fraud), CC-0003 (cleared/none)",
+        "source": "graph",
+        "ref": "query:similar_closed_cases_graph(card_id=C05876-K2)",
+        "entity_ids": [
+          "CC-2370",
+          "CC-0003"
+        ]
+      },
+      {
+        "claim": "Found 3 related closed case(s) in case memory (card/device/region blend): CC-0003 (cleared/none), CC-2370 (confirmed_fraud/card_not_present_fraud), CC-5402 (confirmed_fraud/out_of_region_use)",
         "source": "graph",
         "ref": "query:similar_closed_cases",
         "entity_ids": [
@@ -90,5 +99,5 @@
   "stop_reason": "Simulated verification response settled the verdict; no further evidence would change the action.",
   "tool_calls": 7,
   "tokens": 0,
-  "latency_s": 1.26
+  "latency_s": 1.85
 }

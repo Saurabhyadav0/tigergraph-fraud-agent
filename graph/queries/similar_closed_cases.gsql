@@ -1,0 +1,26 @@
+// Case memory retrieval as an actual graph traversal (not a pandas
+// lookup): given a card, find closed cases sitting directly on it
+// (CC_ON_CARD) and closed cases that named it as a connected card in a
+// ring (CC_CONNECTED_TO) -- both edge types loaded for all 5,565
+// closed cases in scripts/load_graph_foundation.py. This is the
+// "prior fraud cases" relationship-analysis step the brief asks GSQL
+// to do, called live from agent/graph_client.py during evidence
+// gathering instead of only via the local CSV mirror.
+USE GRAPH FraudGraph
+
+CREATE QUERY similar_closed_cases_graph(STRING card_id) FOR GRAPH FraudGraph {
+  SetAccum<STRING> @@seen;
+
+  Start = {InvCard.*};
+  Start = SELECT c FROM Start:c WHERE c.card_id == card_id;
+
+  Direct = SELECT cc FROM Start:c -(CC_ON_CARD_REV)- ClosedCase:cc;
+  Connected = SELECT cc FROM Start:c -(CC_CONNECTED_TO_REV)- ClosedCase:cc;
+
+  Cases = Direct UNION Connected;
+
+  PRINT Cases[
+    Cases.case_id, Cases.outcome, Cases.pattern,
+    Cases.exposure_usd, Cases.analyst_notes
+  ];
+}

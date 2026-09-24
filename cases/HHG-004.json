@@ -56,7 +56,18 @@
         "entity_ids": []
       },
       {
-        "claim": "Found 4 related closed case(s) in case memory: CC-0696 (cleared/none), CC-1736 (confirmed_fraud/card_not_present_fraud), CC-2121 (confirmed_fraud/card_not_present_fraud), CC-3778 (confirmed_fraud/card_not_present_fraud)",
+        "claim": "GSQL traversal found 4 closed case(s) directly on or connected to this card (source: graph): CC-0696 (cleared/none), CC-3778 (confirmed_fraud/card_not_present_fraud), CC-2121 (confirmed_fraud/card_not_present_fraud), CC-1736 (confirmed_fraud/card_not_present_fraud)",
+        "source": "graph",
+        "ref": "query:similar_closed_cases_graph(card_id=C08106-K1)",
+        "entity_ids": [
+          "CC-0696",
+          "CC-3778",
+          "CC-2121",
+          "CC-1736"
+        ]
+      },
+      {
+        "claim": "Found 4 related closed case(s) in case memory (card/device/region blend): CC-0696 (cleared/none), CC-1736 (confirmed_fraud/card_not_present_fraud), CC-2121 (confirmed_fraud/card_not_present_fraud), CC-3778 (confirmed_fraud/card_not_present_fraud)",
         "source": "graph",
         "ref": "query:similar_closed_cases",
         "entity_ids": [
@@ -146,5 +157,5 @@
   "stop_reason": "Fraud probability 0.98 >= 0.85 with corroborating evidence.",
   "tool_calls": 6,
   "tokens": 0,
-  "latency_s": 4.23
+  "latency_s": 3.84
 }

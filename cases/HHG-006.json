@@ -597,7 +597,7 @@
         "entity_ids": []
       },
       {
-        "claim": "Found 8 related closed case(s) in case memory: CC-0781 (confirmed_fraud/card_not_present_new_device), CC-1476 (confirmed_fraud/card_not_present_fraud), CC-3368 (confirmed_fraud/card_not_present_new_device), CC-5111 (confirmed_fraud/card_not_present_new_device), CC-3889 (confirmed_fraud/account_takeover)",
+        "claim": "Found 8 related closed case(s) in case memory (card/device/region blend): CC-0781 (confirmed_fraud/card_not_present_new_device), CC-1476 (confirmed_fraud/card_not_present_fraud), CC-3368 (confirmed_fraud/card_not_present_new_device), CC-5111 (confirmed_fraud/card_not_present_new_device), CC-3889 (confirmed_fraud/account_takeover)",
         "source": "graph",
         "ref": "query:similar_closed_cases",
         "entity_ids": [
@@ -665,5 +665,5 @@
   "stop_reason": "Fraud probability 0.98 >= 0.85 with corroborating evidence.",
   "tool_calls": 6,
   "tokens": 0,
-  "latency_s": 3.37
+  "latency_s": 3.91
 }

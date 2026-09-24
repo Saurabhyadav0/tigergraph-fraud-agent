@@ -55,7 +55,18 @@
         "entity_ids": []
       },
       {
-        "claim": "Found 8 related closed case(s) in case memory: CC-2011 (confirmed_fraud/out_of_region_use), CC-2087 (cleared/none), CC-2860 (confirmed_fraud/card_not_present_fraud), CC-5026 (confirmed_fraud/out_of_region_use), CC-4268 (confirmed_fraud/card_not_present_fraud)",
+        "claim": "GSQL traversal found 4 closed case(s) directly on or connected to this card (source: graph): CC-5026 (confirmed_fraud/out_of_region_use), CC-2860 (confirmed_fraud/card_not_present_fraud), CC-2011 (confirmed_fraud/out_of_region_use), CC-2087 (cleared/none)",
+        "source": "graph",
+        "ref": "query:similar_closed_cases_graph(card_id=C07987-K2)",
+        "entity_ids": [
+          "CC-5026",
+          "CC-2860",
+          "CC-2011",
+          "CC-2087"
+        ]
+      },
+      {
+        "claim": "Found 8 related closed case(s) in case memory (card/device/region blend): CC-2011 (confirmed_fraud/out_of_region_use), CC-2087 (cleared/none), CC-2860 (confirmed_fraud/card_not_present_fraud), CC-5026 (confirmed_fraud/out_of_region_use), CC-4268 (confirmed_fraud/card_not_present_fraud)",
         "source": "graph",
         "ref": "query:similar_closed_cases",
         "entity_ids": [
@@ -153,5 +164,5 @@
   "stop_reason": "Fraud probability 0.95 >= 0.85 with corroborating evidence.",
   "tool_calls": 6,
   "tokens": 0,
-  "latency_s": 4.74
+  "latency_s": 5.73
 }

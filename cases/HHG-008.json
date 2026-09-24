@@ -216,7 +216,33 @@
         "entity_ids": []
       },
       {
-        "claim": "Found 8 related closed case(s) in case memory: CC-0056 (confirmed_fraud/card_not_present_new_device), CC-0467 (confirmed_fraud/card_not_present_new_device), CC-0772 (confirmed_fraud/card_not_present_new_device), CC-1293 (confirmed_fraud/card_not_present_fraud), CC-1715 (confirmed_fraud/card_not_present_new_device)",
+        "claim": "GSQL traversal found 19 closed case(s) directly on or connected to this card (source: graph): CC-2716 (confirmed_fraud/card_not_present_new_device), CC-3928 (confirmed_fraud/card_not_present_new_device), CC-3079 (confirmed_fraud/card_not_present_new_device), CC-1293 (confirmed_fraud/card_not_present_fraud), CC-0772 (confirmed_fraud/card_not_present_new_device)",
+        "source": "graph",
+        "ref": "query:similar_closed_cases_graph(card_id=C13171-K2)",
+        "entity_ids": [
+          "CC-2716",
+          "CC-3928",
+          "CC-3079",
+          "CC-1293",
+          "CC-0772",
+          "CC-3728",
+          "CC-4819",
+          "CC-3422",
+          "CC-1715",
+          "CC-4485",
+          "CC-4163",
+          "CC-2244",
+          "CC-2059",
+          "CC-0467",
+          "CC-2454",
+          "CC-0056",
+          "CC-1925",
+          "CC-5010",
+          "CC-3566"
+        ]
+      },
+      {
+        "claim": "Found 8 related closed case(s) in case memory (card/device/region blend): CC-0056 (confirmed_fraud/card_not_present_new_device), CC-0467 (confirmed_fraud/card_not_present_new_device), CC-0772 (confirmed_fraud/card_not_present_new_device), CC-1293 (confirmed_fraud/card_not_present_fraud), CC-1715 (confirmed_fraud/card_not_present_new_device)",
         "source": "graph",
         "ref": "query:similar_closed_cases",
         "entity_ids": [
@@ -284,5 +310,5 @@
   "stop_reason": "Verdict (fraud) reached at probability 0.75 on 3 corroborating signal(s); further evidence-gathering is unlikely to change a decisive action here.",
   "tool_calls": 6,
   "tokens": 0,
-  "latency_s": 3.67
+  "latency_s": 4.38
 }

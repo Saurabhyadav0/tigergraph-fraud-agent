@@ -66,7 +66,25 @@
         "entity_ids": []
       },
       {
-        "claim": "Found 8 related closed case(s) in case memory: CC-0031 (confirmed_fraud/card_not_present_new_device), CC-0290 (confirmed_fraud/card_testing), CC-1056 (confirmed_fraud/card_not_present_new_device), CC-2247 (confirmed_fraud/card_testing), CC-2673 (confirmed_fraud/card_testing)",
+        "claim": "GSQL traversal found 11 closed case(s) directly on or connected to this card (source: graph): CC-4743 (cleared/none), CC-4501 (confirmed_fraud/card_testing), CC-3905 (confirmed_fraud/card_not_present_new_device), CC-2247 (confirmed_fraud/card_testing), CC-1056 (confirmed_fraud/card_not_present_new_device)",
+        "source": "graph",
+        "ref": "query:similar_closed_cases_graph(card_id=C11923-K2)",
+        "entity_ids": [
+          "CC-4743",
+          "CC-4501",
+          "CC-3905",
+          "CC-2247",
+          "CC-1056",
+          "CC-2799",
+          "CC-2673",
+          "CC-0290",
+          "CC-0031",
+          "CC-3206",
+          "CC-3039"
+        ]
+      },
+      {
+        "claim": "Found 8 related closed case(s) in case memory (card/device/region blend): CC-0031 (confirmed_fraud/card_not_present_new_device), CC-0290 (confirmed_fraud/card_testing), CC-1056 (confirmed_fraud/card_not_present_new_device), CC-2247 (confirmed_fraud/card_testing), CC-2673 (confirmed_fraud/card_testing)",
         "source": "graph",
         "ref": "query:similar_closed_cases",
         "entity_ids": [
@@ -146,7 +164,7 @@
   "sar": {
     "file": true,
     "reason": "activity connects to a shared device profile / region cluster / ring",
-    "narrative": "Customer C11923, card C11923-K2. 1 transaction(s) totaling $131.30, pattern: card not present new device. Activity dated 2016-12-29 to 2016-12-29. Channel: online; billing region nan. How: customer proactively reported the transaction: \"Customer C11923 message: 'I never made this $131.30 purchase. Please check my card.' Refers to 3583368.\" [card_not_present_new_device] amount is a 2.5-sigma outlier vs. this customer's history; 84 transactions on this card within 48 hours; from a device profile marked New for this account [shared_origin] 3 other card(s) share this transaction's device profile case-memory prior adjustment: -0.15 from this card's own closed-case history Filed per policy: activity connects to a shared device profile / region cluster / ring.",
+    "narrative": "Customer C11923, card C11923-K2. 1 transaction(s) totaling $131.30, pattern: card not present new device. Activity dated 2016-12-29 to 2016-12-29. Channel: online; billing region nan. How: customer proactively reported the transaction: \"Customer C11923 message: 'I never made this $131.30 purchase. Please check my card.' Refers to 3583368.\" [card_not_present_new_device] amount is a 2.5-sigma outlier vs. this customer's history; 84 transactions on this card within 48 hours; from a device profile marked New for this account [shared_origin] 3 other card(s) share this transaction's device profile case-memory prior adjustment: +0.20 from this card's own closed-case history Filed per policy: activity connects to a shared device profile / region cluster / ring.",
     "subjects": [
       "C03938-K1",
       "C05595-K1",
@@ -163,5 +181,5 @@
   "stop_reason": "Fraud probability 0.98 >= 0.85 with corroborating evidence.",
   "tool_calls": 6,
   "tokens": 0,
-  "latency_s": 4.98
+  "latency_s": 10.14
 }

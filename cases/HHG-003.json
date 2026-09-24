@@ -38,7 +38,20 @@
         "entity_ids": []
       },
       {
-        "claim": "Found 8 related closed case(s) in case memory: CC-1589 (cleared/none), CC-2817 (confirmed_fraud/out_of_region_use), CC-2935 (confirmed_fraud/out_of_region_use), CC-3327 (confirmed_fraud/account_takeover), CC-3682 (confirmed_fraud/out_of_region_use)",
+        "claim": "GSQL traversal found 6 closed case(s) directly on or connected to this card (source: graph): CC-3327 (confirmed_fraud/account_takeover), CC-2935 (confirmed_fraud/out_of_region_use), CC-2817 (confirmed_fraud/out_of_region_use), CC-3682 (confirmed_fraud/out_of_region_use), CC-4957 (confirmed_fraud/out_of_region_use)",
+        "source": "graph",
+        "ref": "query:similar_closed_cases_graph(card_id=C08623-K2)",
+        "entity_ids": [
+          "CC-3327",
+          "CC-2935",
+          "CC-2817",
+          "CC-3682",
+          "CC-4957",
+          "CC-1589"
+        ]
+      },
+      {
+        "claim": "Found 8 related closed case(s) in case memory (card/device/region blend): CC-1589 (cleared/none), CC-2817 (confirmed_fraud/out_of_region_use), CC-2935 (confirmed_fraud/out_of_region_use), CC-3327 (confirmed_fraud/account_takeover), CC-3682 (confirmed_fraud/out_of_region_use)",
         "source": "graph",
         "ref": "query:similar_closed_cases",
         "entity_ids": [
@@ -106,5 +119,5 @@
   "stop_reason": "Verdict (fraud) reached at probability 0.75 on 3 corroborating signal(s); further evidence-gathering is unlikely to change a decisive action here.",
   "tool_calls": 6,
   "tokens": 0,
-  "latency_s": 3.19
+  "latency_s": 5.41
 }

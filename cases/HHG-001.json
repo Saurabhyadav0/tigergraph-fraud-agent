@@ -29,7 +29,18 @@
         "entity_ids": []
       },
       {
-        "claim": "Found 5 related closed case(s) in case memory: CC-1066 (confirmed_fraud/out_of_region_use), CC-1673 (confirmed_fraud/card_not_present_new_device), CC-2964 (confirmed_fraud/out_of_region_use), CC-3587 (confirmed_fraud/out_of_region_use), CC-4431 (confirmed_fraud/out_of_region_use)",
+        "claim": "GSQL traversal found 4 closed case(s) directly on or connected to this card (source: graph): CC-1066 (confirmed_fraud/out_of_region_use), CC-2964 (confirmed_fraud/out_of_region_use), CC-3587 (confirmed_fraud/out_of_region_use), CC-1673 (confirmed_fraud/card_not_present_new_device)",
+        "source": "graph",
+        "ref": "query:similar_closed_cases_graph(card_id=C12382-K1)",
+        "entity_ids": [
+          "CC-1066",
+          "CC-2964",
+          "CC-3587",
+          "CC-1673"
+        ]
+      },
+      {
+        "claim": "Found 5 related closed case(s) in case memory (card/device/region blend): CC-1066 (confirmed_fraud/out_of_region_use), CC-1673 (confirmed_fraud/card_not_present_new_device), CC-2964 (confirmed_fraud/out_of_region_use), CC-3587 (confirmed_fraud/out_of_region_use), CC-4431 (confirmed_fraud/out_of_region_use)",
         "source": "graph",
         "ref": "query:similar_closed_cases",
         "entity_ids": [
@@ -92,5 +103,5 @@
   "stop_reason": "Simulated verification response settled the verdict; no further evidence would change the action.",
   "tool_calls": 7,
   "tokens": 0,
-  "latency_s": 2.65
+  "latency_s": 3.36
 }

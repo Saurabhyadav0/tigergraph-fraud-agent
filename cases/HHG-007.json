@@ -39,7 +39,33 @@
         "entity_ids": []
       },
       {
-        "claim": "Found 8 related closed case(s) in case memory: CC-0104 (confirmed_fraud/out_of_region_use), CC-0657 (cleared/none), CC-0765 (confirmed_fraud/out_of_region_use), CC-1228 (confirmed_fraud/account_takeover), CC-1524 (confirmed_fraud/account_takeover)",
+        "claim": "GSQL traversal found 19 closed case(s) directly on or connected to this card (source: graph): CC-1228 (confirmed_fraud/account_takeover), CC-4196 (confirmed_fraud/out_of_region_use), CC-4787 (confirmed_fraud/account_takeover), CC-4455 (confirmed_fraud/account_takeover), CC-0765 (confirmed_fraud/out_of_region_use)",
+        "source": "graph",
+        "ref": "query:similar_closed_cases_graph(card_id=C09933-K2)",
+        "entity_ids": [
+          "CC-1228",
+          "CC-4196",
+          "CC-4787",
+          "CC-4455",
+          "CC-0765",
+          "CC-1524",
+          "CC-0104",
+          "CC-2565",
+          "CC-3136",
+          "CC-2834",
+          "CC-0657",
+          "CC-3821",
+          "CC-2986",
+          "CC-4597",
+          "CC-3439",
+          "CC-4277",
+          "CC-5521",
+          "CC-5092",
+          "CC-1682"
+        ]
+      },
+      {
+        "claim": "Found 8 related closed case(s) in case memory (card/device/region blend): CC-0104 (confirmed_fraud/out_of_region_use), CC-0657 (cleared/none), CC-0765 (confirmed_fraud/out_of_region_use), CC-1228 (confirmed_fraud/account_takeover), CC-1524 (confirmed_fraud/account_takeover)",
         "source": "graph",
         "ref": "query:similar_closed_cases",
         "entity_ids": [
@@ -108,5 +134,5 @@
   "stop_reason": "Simulated verification response settled the verdict; no further evidence would change the action.",
   "tool_calls": 7,
   "tokens": 0,
-  "latency_s": 3.1
+  "latency_s": 3.89
 }

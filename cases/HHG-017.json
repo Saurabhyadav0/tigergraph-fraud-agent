@@ -341,7 +341,15 @@
         "entity_ids": []
       },
       {
-        "claim": "Found 8 related closed case(s) in case memory: CC-1383 (cleared/none), CC-5172 (confirmed_fraud/card_not_present_fraud), CC-5181 (confirmed_fraud/card_not_present_new_device), CC-5217 (confirmed_fraud/card_not_present_new_device), CC-5345 (confirmed_fraud/card_not_present_new_device)",
+        "claim": "GSQL traversal found 1 closed case(s) directly on or connected to this card (source: graph): CC-1383 (cleared/none)",
+        "source": "graph",
+        "ref": "query:similar_closed_cases_graph(card_id=C04570-K1)",
+        "entity_ids": [
+          "CC-1383"
+        ]
+      },
+      {
+        "claim": "Found 8 related closed case(s) in case memory (card/device/region blend): CC-1383 (cleared/none), CC-5172 (confirmed_fraud/card_not_present_fraud), CC-5181 (confirmed_fraud/card_not_present_new_device), CC-5217 (confirmed_fraud/card_not_present_new_device), CC-5345 (confirmed_fraud/card_not_present_new_device)",
         "source": "graph",
         "ref": "query:similar_closed_cases",
         "entity_ids": [
@@ -405,5 +413,5 @@
   "stop_reason": "Simulated verification response settled the verdict; no further evidence would change the action.",
   "tool_calls": 7,
   "tokens": 0,
-  "latency_s": 2.93
+  "latency_s": 3.52
 }

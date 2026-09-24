@@ -201,7 +201,7 @@
         "entity_ids": []
       },
       {
-        "claim": "Found 5 related closed case(s) in case memory: CC-2540 (confirmed_fraud/card_not_present_new_device), CC-2675 (confirmed_fraud/card_not_present_new_device), CC-2732 (confirmed_fraud/card_not_present_new_device), CC-2765 (confirmed_fraud/card_not_present_fraud), CC-3580 (confirmed_fraud/card_not_present_new_device)",
+        "claim": "Found 5 related closed case(s) in case memory (card/device/region blend): CC-2540 (confirmed_fraud/card_not_present_new_device), CC-2675 (confirmed_fraud/card_not_present_new_device), CC-2732 (confirmed_fraud/card_not_present_new_device), CC-2765 (confirmed_fraud/card_not_present_fraud), CC-3580 (confirmed_fraud/card_not_present_new_device)",
         "source": "graph",
         "ref": "query:similar_closed_cases",
         "entity_ids": [
@@ -280,5 +280,5 @@
   "stop_reason": "Simulated verification response settled the verdict; no further evidence would change the action.",
   "tool_calls": 7,
   "tokens": 0,
-  "latency_s": 2.11
+  "latency_s": 2.65
 }

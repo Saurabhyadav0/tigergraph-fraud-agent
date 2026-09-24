@@ -1,9 +1,10 @@
 """
 Computes the structured fraud-investigation signals for one case,
 against the real HHGOA_IEEE data (via TransactionStore) and the
-graph's case memory (via GraphClient.similar_closed_cases). This is
-the "gather evidence" step of the investigate loop -- the output feeds
-both the rule-based assessor and, when configured, the LLM reasoner.
+graph's case memory (a live GSQL traversal via
+GraphClient.similar_closed_cases_graph). This is the "gather evidence"
+step of the investigate loop -- the output feeds both the rule-based
+assessor and, when configured, the LLM reasoner.
 """
 from __future__ import annotations
 
@@ -62,7 +63,7 @@ def _similar_closed_cases(store: TransactionStore, card_id: str, device_profile_
     return ranked[["case_id", "outcome", "pattern", "exposure_usd", "analyst_notes"]].to_dict("records") if len(ranked) else []
 
 
-def gather(store: TransactionStore, flagged_txn_id: str, card_id: str, customer_id: str) -> CaseEvidence:
+def gather(store: TransactionStore, graph, flagged_txn_id: str, card_id: str, customer_id: str) -> CaseEvidence:
     txn = store.get_transaction(flagged_txn_id)
     channel = txn.get("channel", "")
     dev_id = txn.get("device_profile_id")
@@ -99,7 +100,21 @@ def gather(store: TransactionStore, flagged_txn_id: str, card_id: str, customer_
         amount_zscore = (txn.get("TransactionAmt", 0) - amts.mean()) / amts.std()
 
     similar = _similar_closed_cases(store, card_id, dev_id, region, around_ts=ts)
-    same_card = store.closed_cases_by_card(card_id)[["case_id", "outcome", "pattern", "exposure_usd", "analyst_notes"]].to_dict("records")
+
+    # Same-card case memory: a real GSQL traversal against TigerGraph
+    # (InvCard -CC_ON_CARD/CC_CONNECTED_TO- ClosedCase), not a pandas
+    # lookup. Falls back to the local mirror only if the graph call fails
+    # (e.g. workspace mid-resume), so a transient connection hiccup
+    # doesn't take down the whole investigation.
+    same_card_source = "graph"
+    try:
+        same_card = graph.similar_closed_cases_graph(card_id)
+    except Exception as e:
+        print(f"[evidence.gather] similar_closed_cases_graph failed ({e}); falling back to local mirror")
+        same_card_source = "local mirror (graph call failed)"
+        same_card = store.closed_cases_by_card(card_id)[
+            ["case_id", "outcome", "pattern", "exposure_usd", "analyst_notes"]
+        ].to_dict("records")
 
     # A device fingerprint alone isn't enough (49% of fingerprints in this
     # dataset are shared by >1 card, some by 1000+ -- popular phone models,
@@ -182,9 +197,17 @@ def gather(store: TransactionStore, flagged_txn_id: str, card_id: str, customer_
             "graph", f"query:customer_history({customer_id})", [],
         )
 
+    if same_card:
+        ev.add(
+            f"GSQL traversal found {len(same_card)} closed case(s) directly on or connected to this card "
+            f"(source: {same_card_source}): "
+            + ", ".join(f"{c['case_id']} ({c['outcome']}/{c['pattern']})" for c in same_card[:5]),
+            "graph", f"query:similar_closed_cases_graph(card_id={card_id})", [c["case_id"] for c in same_card],
+        )
+
     if similar:
         ev.add(
-            f"Found {len(similar)} related closed case(s) in case memory: "
+            f"Found {len(similar)} related closed case(s) in case memory (card/device/region blend): "
             + ", ".join(f"{c['case_id']} ({c['outcome']}/{c['pattern']})" for c in similar[:5]),
             "graph", "query:similar_closed_cases", [c["case_id"] for c in similar],
         )
