@@ -145,9 +145,24 @@
           "CC-4038",
           "CC-4086"
         ]
+      },
+      {
+        "claim": "GraphRAG retrieval (TF-IDF over closed-case narratives) surfaced 5 case(s) describing similar activity, independent of card/device/region overlap: CC-1490 (sim=0.293, cleared/none), CC-2649 (sim=0.285, confirmed_fraud/undocumented), CC-2971 (sim=0.285, confirmed_fraud/undocumented), CC-1396 (sim=0.285, cleared/none), CC-1024 (sim=0.285, cleared/none)",
+        "source": "document",
+        "ref": "query:narrative_retrieval(closed_cases_history.analyst_notes)",
+        "entity_ids": [
+          "CC-1490",
+          "CC-2649",
+          "CC-2971",
+          "CC-1396",
+          "CC-1024"
+        ]
       }
     ],
     "similar_prior_cases": [
+      "CC-1024",
+      "CC-1396",
+      "CC-1490",
       "CC-2649",
       "CC-2971",
       "CC-2985",
@@ -256,5 +271,5 @@
   "stop_reason": "Simulated verification response settled the verdict; no further evidence would change the action.",
   "tool_calls": 7,
   "tokens": 0,
-  "latency_s": 21.13
+  "latency_s": 14.91
 }

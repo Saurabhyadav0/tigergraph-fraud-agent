@@ -79,17 +79,34 @@
           "CC-4309",
           "CC-4311"
         ]
+      },
+      {
+        "claim": "GraphRAG retrieval (TF-IDF over closed-case narratives) surfaced 5 case(s) describing similar activity, independent of card/device/region overlap: CC-1006 (sim=0.546, cleared/none), CC-1445 (sim=0.544, cleared/none), CC-1206 (sim=0.507, cleared/none), CC-3645 (sim=0.5, cleared/none), CC-4339 (sim=0.5, cleared/none)",
+        "source": "document",
+        "ref": "query:narrative_retrieval(closed_cases_history.analyst_notes)",
+        "entity_ids": [
+          "CC-1006",
+          "CC-1445",
+          "CC-1206",
+          "CC-3645",
+          "CC-4339"
+        ]
       }
     ],
     "similar_prior_cases": [
+      "CC-1006",
+      "CC-1206",
+      "CC-1445",
       "CC-2011",
       "CC-2087",
       "CC-2860",
-      "CC-5026",
+      "CC-3645",
       "CC-4268",
       "CC-4294",
       "CC-4309",
-      "CC-4311"
+      "CC-4311",
+      "CC-4339",
+      "CC-5026"
     ],
     "summary": "Assessed as out of region use at 95% confidence. Bank risk model scored this transaction 0.90 (an input, discounted per policy since high scores are often legitimate). 4 other card(s) share this transaction's device profile. Case-memory prior adjustment: +0.20 from this card's own closed-case history. Exposure $99.92 across 1 transaction(s).",
     "written_to_graph": true,
@@ -164,5 +181,5 @@
   "stop_reason": "Fraud probability 0.95 >= 0.85 with corroborating evidence.",
   "tool_calls": 6,
   "tokens": 0,
-  "latency_s": 5.73
+  "latency_s": 6.53
 }

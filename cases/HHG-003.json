@@ -38,7 +38,7 @@
         "entity_ids": []
       },
       {
-        "claim": "GSQL traversal found 6 closed case(s) directly on or connected to this card (source: graph): CC-3327 (confirmed_fraud/account_takeover), CC-2935 (confirmed_fraud/out_of_region_use), CC-2817 (confirmed_fraud/out_of_region_use), CC-3682 (confirmed_fraud/out_of_region_use), CC-4957 (confirmed_fraud/out_of_region_use)",
+        "claim": "GSQL traversal found 6 closed case(s) directly on or connected to this card (source: graph): CC-3327 (confirmed_fraud/account_takeover), CC-2935 (confirmed_fraud/out_of_region_use), CC-2817 (confirmed_fraud/out_of_region_use), CC-3682 (confirmed_fraud/out_of_region_use), CC-1589 (cleared/none)",
         "source": "graph",
         "ref": "query:similar_closed_cases_graph(card_id=C08623-K2)",
         "entity_ids": [
@@ -46,8 +46,8 @@
           "CC-2935",
           "CC-2817",
           "CC-3682",
-          "CC-4957",
-          "CC-1589"
+          "CC-1589",
+          "CC-4957"
         ]
       },
       {
@@ -64,17 +64,34 @@
           "CC-4712",
           "CC-4716"
         ]
+      },
+      {
+        "claim": "GraphRAG retrieval (TF-IDF over closed-case narratives) surfaced 5 case(s) describing similar activity, independent of card/device/region overlap: CC-1606 (sim=0.335, cleared/none), CC-3520 (sim=0.245, cleared/none), CC-1449 (sim=0.245, cleared/none), CC-1610 (sim=0.244, cleared/none), CC-1284 (sim=0.243, cleared/none)",
+        "source": "document",
+        "ref": "query:narrative_retrieval(closed_cases_history.analyst_notes)",
+        "entity_ids": [
+          "CC-1606",
+          "CC-3520",
+          "CC-1449",
+          "CC-1610",
+          "CC-1284"
+        ]
       }
     ],
     "similar_prior_cases": [
+      "CC-1284",
+      "CC-1449",
       "CC-1589",
+      "CC-1606",
+      "CC-1610",
       "CC-2817",
       "CC-2935",
       "CC-3327",
+      "CC-3520",
       "CC-3682",
-      "CC-4957",
       "CC-4712",
-      "CC-4716"
+      "CC-4716",
+      "CC-4957"
     ],
     "summary": "Assessed as out of region use at 75% confidence. Customer proactively reported the transaction: \"Customer C08623 message: 'I never made this $49.00 purchase. Please check my card.' Refers to 3530164.\". Case-memory prior adjustment: +0.20 from this card's own closed-case history. No fresh pattern signal fired; classified from this card's historical pattern (out_of_region_use). Exposure $49.00 across 1 transaction(s).",
     "written_to_graph": true,
@@ -119,5 +136,5 @@
   "stop_reason": "Verdict (fraud) reached at probability 0.75 on 3 corroborating signal(s); further evidence-gathering is unlikely to change a decisive action here.",
   "tool_calls": 6,
   "tokens": 0,
-  "latency_s": 5.41
+  "latency_s": 5.53
 }

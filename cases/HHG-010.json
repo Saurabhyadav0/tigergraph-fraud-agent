@@ -272,10 +272,27 @@
           "CC-3954",
           "CC-4362"
         ]
+      },
+      {
+        "claim": "GraphRAG retrieval (TF-IDF over closed-case narratives) surfaced 5 case(s) describing similar activity, independent of card/device/region overlap: CC-0882 (sim=0.391, cleared/none), CC-0096 (sim=0.39, cleared/none), CC-1006 (sim=0.386, cleared/none), CC-1445 (sim=0.384, cleared/none), CC-1549 (sim=0.383, cleared/none)",
+        "source": "document",
+        "ref": "query:narrative_retrieval(closed_cases_history.analyst_notes)",
+        "entity_ids": [
+          "CC-0882",
+          "CC-0096",
+          "CC-1006",
+          "CC-1445",
+          "CC-1549"
+        ]
       }
     ],
     "similar_prior_cases": [
+      "CC-0096",
       "CC-0873",
+      "CC-0882",
+      "CC-1006",
+      "CC-1445",
+      "CC-1549",
       "CC-2720",
       "CC-3549",
       "CC-3691",
@@ -343,5 +360,5 @@
   "stop_reason": "Verdict (fraud) reached at probability 0.75 on 3 corroborating signal(s); further evidence-gathering is unlikely to change a decisive action here.",
   "tool_calls": 6,
   "tokens": 0,
-  "latency_s": 3.82
+  "latency_s": 4.93
 }

@@ -216,29 +216,29 @@
         "entity_ids": []
       },
       {
-        "claim": "GSQL traversal found 19 closed case(s) directly on or connected to this card (source: graph): CC-2716 (confirmed_fraud/card_not_present_new_device), CC-3928 (confirmed_fraud/card_not_present_new_device), CC-3079 (confirmed_fraud/card_not_present_new_device), CC-1293 (confirmed_fraud/card_not_present_fraud), CC-0772 (confirmed_fraud/card_not_present_new_device)",
+        "claim": "GSQL traversal found 19 closed case(s) directly on or connected to this card (source: graph): CC-2716 (confirmed_fraud/card_not_present_new_device), CC-3928 (confirmed_fraud/card_not_present_new_device), CC-3079 (confirmed_fraud/card_not_present_new_device), CC-0772 (confirmed_fraud/card_not_present_new_device), CC-1293 (confirmed_fraud/card_not_present_fraud)",
         "source": "graph",
         "ref": "query:similar_closed_cases_graph(card_id=C13171-K2)",
         "entity_ids": [
           "CC-2716",
           "CC-3928",
           "CC-3079",
-          "CC-1293",
           "CC-0772",
+          "CC-1293",
           "CC-3728",
+          "CC-1715",
           "CC-4819",
           "CC-3422",
-          "CC-1715",
           "CC-4485",
           "CC-4163",
-          "CC-2244",
           "CC-2059",
           "CC-0467",
           "CC-2454",
           "CC-0056",
-          "CC-1925",
+          "CC-2244",
           "CC-5010",
-          "CC-3566"
+          "CC-3566",
+          "CC-1925"
         ]
       },
       {
@@ -255,17 +255,34 @@
           "CC-2059",
           "CC-2244"
         ]
+      },
+      {
+        "claim": "GraphRAG retrieval (TF-IDF over closed-case narratives) surfaced 5 case(s) describing similar activity, independent of card/device/region overlap: CC-4289 (sim=0.324, confirmed_fraud/out_of_region_use), CC-0991 (sim=0.311, cleared/none), CC-4697 (sim=0.255, cleared/none), CC-0696 (sim=0.211, cleared/none), CC-3286 (sim=0.199, confirmed_fraud/card_not_present_fraud)",
+        "source": "document",
+        "ref": "query:narrative_retrieval(closed_cases_history.analyst_notes)",
+        "entity_ids": [
+          "CC-4289",
+          "CC-0991",
+          "CC-4697",
+          "CC-0696",
+          "CC-3286"
+        ]
       }
     ],
     "similar_prior_cases": [
       "CC-0056",
       "CC-0467",
+      "CC-0696",
       "CC-0772",
+      "CC-0991",
       "CC-1293",
       "CC-1715",
       "CC-1925",
       "CC-2059",
-      "CC-2244"
+      "CC-2244",
+      "CC-3286",
+      "CC-4289",
+      "CC-4697"
     ],
     "summary": "Assessed as card not present new device at 75% confidence. Customer proactively reported the transaction: \"Customer C13171 message: 'I never made this $55.68 purchase. Please check my card.' Refers to 3558054.\". Case-memory prior adjustment: +0.20 from this card's own closed-case history. No fresh pattern signal fired; classified from this card's historical pattern (card_not_present_new_device). Exposure $55.68 across 1 transaction(s).",
     "written_to_graph": true,
@@ -310,5 +327,5 @@
   "stop_reason": "Verdict (fraud) reached at probability 0.75 on 3 corroborating signal(s); further evidence-gathering is unlikely to change a decisive action here.",
   "tool_calls": 6,
   "tokens": 0,
-  "latency_s": 4.38
+  "latency_s": 9.96
 }

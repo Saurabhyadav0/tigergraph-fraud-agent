@@ -58,9 +58,14 @@ def _context(ev: CaseEvidence, trigger_type: str, trigger_text: str, bank_risk_s
     lines.append(f"ring_device_cards: {ev.ring_device_cards}")
     lines.append(f"customer_known_regions: {sorted(ev.customer_known_regions)}")
     lines.append(f"amount_zscore: {ev.amount_zscore}")
-    lines.append(f"\n## Similar closed cases (case memory)")
+    lines.append(f"\n## Similar closed cases (graph traversal: same/connected card)")
     for c in ev.similar_closed_cases:
         lines.append(f"- {c['case_id']}: {c['outcome']}/{c['pattern']}, ${c['exposure_usd']}: {c['analyst_notes'][:200]}")
+    if ev.narrative_similar_cases:
+        lines.append(f"\n## Similar closed cases (GraphRAG: narrative similarity, no structural overlap required)")
+        for c in ev.narrative_similar_cases:
+            lines.append(f"- {c['case_id']} (similarity={c['similarity']}): {c['outcome']}/{c['pattern']}, "
+                          f"${c['exposure_usd']}: {c['analyst_notes'][:200]}")
     return "\n".join(lines)
 
 

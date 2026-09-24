@@ -1059,6 +1059,18 @@
           "CC-2241",
           "CC-2380"
         ]
+      },
+      {
+        "claim": "GraphRAG retrieval (TF-IDF over closed-case narratives) surfaced 5 case(s) describing similar activity, independent of card/device/region overlap: CC-3050 (sim=0.371, cleared/none), CC-3362 (sim=0.371, cleared/none), CC-1702 (sim=0.37, cleared/none), CC-1616 (sim=0.349, confirmed_fraud/out_of_region_use), CC-1479 (sim=0.337, confirmed_fraud/out_of_region_use)",
+        "source": "document",
+        "ref": "query:narrative_retrieval(closed_cases_history.analyst_notes)",
+        "entity_ids": [
+          "CC-3050",
+          "CC-3362",
+          "CC-1702",
+          "CC-1616",
+          "CC-1479"
+        ]
       }
     ],
     "similar_prior_cases": [
@@ -1066,10 +1078,15 @@
       "CC-0913",
       "CC-1308",
       "CC-1316",
+      "CC-1479",
       "CC-1495",
+      "CC-1616",
+      "CC-1702",
       "CC-1955",
       "CC-2241",
-      "CC-2380"
+      "CC-2380",
+      "CC-3050",
+      "CC-3362"
     ],
     "summary": "Assessed as undocumented at 72% confidence. Customer proactively reported the transaction: \"Customer C08299 message: 'I never made this $30.02 purchase. Please check my card.' Refers to 3581141.\". Customer denied making the transaction. Exposure $30.02 across 1 transaction(s).",
     "written_to_graph": true,
@@ -1131,5 +1148,5 @@
   "stop_reason": "Simulated verification response settled the verdict; no further evidence would change the action.",
   "tool_calls": 7,
   "tokens": 0,
-  "latency_s": 3.65
+  "latency_s": 5.26
 }

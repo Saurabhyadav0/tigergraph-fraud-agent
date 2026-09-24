@@ -82,17 +82,34 @@
           "CC-3969",
           "CC-4141"
         ]
+      },
+      {
+        "claim": "GraphRAG retrieval (TF-IDF over closed-case narratives) surfaced 5 case(s) describing similar activity, independent of card/device/region overlap: CC-0987 (sim=0.426, cleared/none), CC-4643 (sim=0.364, cleared/none), CC-1396 (sim=0.347, cleared/none), CC-3873 (sim=0.341, cleared/none), CC-2105 (sim=0.333, cleared/none)",
+        "source": "document",
+        "ref": "query:narrative_retrieval(closed_cases_history.analyst_notes)",
+        "entity_ids": [
+          "CC-0987",
+          "CC-4643",
+          "CC-1396",
+          "CC-3873",
+          "CC-2105"
+        ]
       }
     ],
     "similar_prior_cases": [
       "CC-0615",
+      "CC-0987",
       "CC-1313",
-      "CC-3886",
+      "CC-1396",
+      "CC-2105",
       "CC-3756",
       "CC-3772",
       "CC-3828",
+      "CC-3873",
+      "CC-3886",
       "CC-3969",
-      "CC-4141"
+      "CC-4141",
+      "CC-4643"
     ],
     "summary": "Assessed as card not present new device at 98% confidence. Bank risk model scored this transaction 0.77 (an input, discounted per policy since high scores are often legitimate). Amount is a 3.6-sigma outlier vs. this customer's history; 5 transactions on this card within 48 hours; from a device profile marked New for this account. New device profile plus a spending anomaly, on a customer whose history is 23% in-person -- inconsistent with the usual pattern. Exposure $599.94 across 1 transaction(s).",
     "written_to_graph": true,
@@ -168,5 +185,5 @@
   "stop_reason": "Fraud probability 0.98 >= 0.85 with corroborating evidence.",
   "tool_calls": 6,
   "tokens": 0,
-  "latency_s": 10.73
+  "latency_s": 6.74
 }

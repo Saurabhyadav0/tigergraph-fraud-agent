@@ -53,11 +53,28 @@
           "CC-2370",
           "CC-5402"
         ]
+      },
+      {
+        "claim": "GraphRAG retrieval (TF-IDF over closed-case narratives) surfaced 5 case(s) describing similar activity, independent of card/device/region overlap: CC-5077 (sim=0.478, cleared/none), CC-2077 (sim=0.436, cleared/none), CC-2452 (sim=0.386, cleared/none), CC-3177 (sim=0.382, cleared/none), CC-1267 (sim=0.379, cleared/none)",
+        "source": "document",
+        "ref": "query:narrative_retrieval(closed_cases_history.analyst_notes)",
+        "entity_ids": [
+          "CC-5077",
+          "CC-2077",
+          "CC-2452",
+          "CC-3177",
+          "CC-1267"
+        ]
       }
     ],
     "similar_prior_cases": [
       "CC-0003",
+      "CC-1267",
+      "CC-2077",
       "CC-2370",
+      "CC-2452",
+      "CC-3177",
+      "CC-5077",
       "CC-5402"
     ],
     "summary": "Assessed as legitimate at 95% confidence. Bank risk model scored this transaction 0.55 (an input, discounted per policy since high scores are often legitimate). Customer confirmed making the transaction.",
@@ -99,5 +116,5 @@
   "stop_reason": "Simulated verification response settled the verdict; no further evidence would change the action.",
   "tool_calls": 7,
   "tokens": 0,
-  "latency_s": 1.85
+  "latency_s": 3.2
 }

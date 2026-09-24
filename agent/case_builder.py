@@ -109,7 +109,10 @@ def build_answer(
         {"claim": it.claim, "source": it.source, "ref": it.ref, "entity_ids": it.entity_ids}
         for it in ev.items
     ]
-    similar_prior_cases = [c["case_id"] for c in ev.similar_closed_cases]
+    similar_prior_cases = sorted(set(
+        [c["case_id"] for c in ev.similar_closed_cases]
+        + [c["case_id"] for c in ev.narrative_similar_cases]
+    ))
 
     status = {
         "fraud": "closed_fraud", "legitimate": "closed_legitimate", "uncertain": "escalated",

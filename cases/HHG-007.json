@@ -51,10 +51,10 @@
           "CC-1524",
           "CC-0104",
           "CC-2565",
-          "CC-3136",
           "CC-2834",
           "CC-0657",
           "CC-3821",
+          "CC-3136",
           "CC-2986",
           "CC-4597",
           "CC-3439",
@@ -78,17 +78,34 @@
           "CC-2565",
           "CC-2834"
         ]
+      },
+      {
+        "claim": "GraphRAG retrieval (TF-IDF over closed-case narratives) surfaced 5 case(s) describing similar activity, independent of card/device/region overlap: CC-4112 (sim=0.589, cleared/none), CC-4148 (sim=0.487, cleared/none), CC-1323 (sim=0.419, cleared/none), CC-5468 (sim=0.398, cleared/none), CC-1206 (sim=0.359, cleared/none)",
+        "source": "document",
+        "ref": "query:narrative_retrieval(closed_cases_history.analyst_notes)",
+        "entity_ids": [
+          "CC-4112",
+          "CC-4148",
+          "CC-1323",
+          "CC-5468",
+          "CC-1206"
+        ]
       }
     ],
     "similar_prior_cases": [
       "CC-0104",
       "CC-0657",
       "CC-0765",
+      "CC-1206",
       "CC-1228",
+      "CC-1323",
       "CC-1524",
       "CC-1682",
       "CC-2565",
-      "CC-2834"
+      "CC-2834",
+      "CC-4112",
+      "CC-4148",
+      "CC-5468"
     ],
     "summary": "Assessed as out of region use at 92% confidence. Bank risk model scored this transaction 0.87 (an input, discounted per policy since high scores are often legitimate). Customer denied making the transaction. Case-memory prior adjustment: +0.20 from this card's own closed-case history. Exposure $111.92 across 1 transaction(s).",
     "written_to_graph": true,
@@ -134,5 +151,5 @@
   "stop_reason": "Simulated verification response settled the verdict; no further evidence would change the action.",
   "tool_calls": 7,
   "tokens": 0,
-  "latency_s": 3.89
+  "latency_s": 5.06
 }

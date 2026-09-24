@@ -39,29 +39,29 @@
         "entity_ids": []
       },
       {
-        "claim": "GSQL traversal found 20 closed case(s) directly on or connected to this card (source: graph): CC-5441 (confirmed_fraud/out_of_region_use), CC-4942 (confirmed_fraud/out_of_region_use), CC-4070 (confirmed_fraud/account_takeover), CC-1450 (confirmed_fraud/account_takeover), CC-2187 (confirmed_fraud/account_takeover)",
+        "claim": "GSQL traversal found 20 closed case(s) directly on or connected to this card (source: graph): CC-5441 (confirmed_fraud/out_of_region_use), CC-4070 (confirmed_fraud/account_takeover), CC-4942 (confirmed_fraud/out_of_region_use), CC-2051 (confirmed_fraud/account_takeover), CC-0631 (confirmed_fraud/out_of_region_use)",
         "source": "graph",
         "ref": "query:similar_closed_cases_graph(card_id=C02354-K2)",
         "entity_ids": [
           "CC-5441",
-          "CC-4942",
           "CC-4070",
-          "CC-1450",
-          "CC-2187",
-          "CC-3634",
+          "CC-4942",
           "CC-2051",
           "CC-0631",
-          "CC-3537",
+          "CC-1450",
+          "CC-3634",
+          "CC-2187",
           "CC-4721",
           "CC-3899",
           "CC-3085",
+          "CC-3537",
           "CC-1699",
           "CC-4436",
           "CC-0255",
-          "CC-5558",
           "CC-0454",
-          "CC-2589",
+          "CC-5558",
           "CC-2432",
+          "CC-2589",
           "CC-0405"
         ]
       },
@@ -79,17 +79,34 @@
           "CC-2051",
           "CC-2187"
         ]
+      },
+      {
+        "claim": "GraphRAG retrieval (TF-IDF over closed-case narratives) surfaced 5 case(s) describing similar activity, independent of card/device/region overlap: CC-1393 (sim=0.333, cleared/none), CC-3168 (sim=0.331, cleared/none), CC-0814 (sim=0.284, cleared/none), CC-0413 (sim=0.284, cleared/none), CC-1135 (sim=0.263, cleared/none)",
+        "source": "document",
+        "ref": "query:narrative_retrieval(closed_cases_history.analyst_notes)",
+        "entity_ids": [
+          "CC-1393",
+          "CC-3168",
+          "CC-0814",
+          "CC-0413",
+          "CC-1135"
+        ]
       }
     ],
     "similar_prior_cases": [
       "CC-0255",
       "CC-0405",
+      "CC-0413",
       "CC-0454",
       "CC-0631",
+      "CC-0814",
+      "CC-1135",
+      "CC-1393",
       "CC-1450",
       "CC-1699",
       "CC-2051",
-      "CC-2187"
+      "CC-2187",
+      "CC-3168"
     ],
     "summary": "Assessed as account takeover at 75% confidence. Customer proactively reported the transaction: \"Customer C02354 message: 'I never made this $39.08 purchase. Please check my card.' Refers to 3491361.\". Case-memory prior adjustment: +0.20 from this card's own closed-case history. No fresh pattern signal fired; classified from this card's historical pattern (account_takeover). Exposure $39.08 across 1 transaction(s).",
     "written_to_graph": true,
@@ -134,5 +151,5 @@
   "stop_reason": "Verdict (fraud) reached at probability 0.75 on 3 corroborating signal(s); further evidence-gathering is unlikely to change a decisive action here.",
   "tool_calls": 6,
   "tokens": 0,
-  "latency_s": 3.89
+  "latency_s": 5.3
 }

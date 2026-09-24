@@ -305,13 +305,13 @@
         "entity_ids": []
       },
       {
-        "claim": "GSQL traversal found 4 closed case(s) directly on or connected to this card (source: graph): CC-3761 (cleared/none), CC-3216 (confirmed_fraud/card_not_present_new_device), CC-1475 (confirmed_fraud/account_takeover), CC-4294 (confirmed_fraud/account_takeover)",
+        "claim": "GSQL traversal found 4 closed case(s) directly on or connected to this card (source: graph): CC-3761 (cleared/none), CC-1475 (confirmed_fraud/account_takeover), CC-3216 (confirmed_fraud/card_not_present_new_device), CC-4294 (confirmed_fraud/account_takeover)",
         "source": "graph",
         "ref": "query:similar_closed_cases_graph(card_id=C07671-K2)",
         "entity_ids": [
           "CC-3761",
-          "CC-3216",
           "CC-1475",
+          "CC-3216",
           "CC-4294"
         ]
       },
@@ -325,13 +325,30 @@
           "CC-3761",
           "CC-4294"
         ]
+      },
+      {
+        "claim": "GraphRAG retrieval (TF-IDF over closed-case narratives) surfaced 5 case(s) describing similar activity, independent of card/device/region overlap: CC-4395 (sim=0.508, cleared/none), CC-3734 (sim=0.424, cleared/none), CC-3498 (sim=0.412, cleared/none), CC-4021 (sim=0.403, cleared/none), CC-1523 (sim=0.391, cleared/none)",
+        "source": "document",
+        "ref": "query:narrative_retrieval(closed_cases_history.analyst_notes)",
+        "entity_ids": [
+          "CC-4395",
+          "CC-3734",
+          "CC-3498",
+          "CC-4021",
+          "CC-1523"
+        ]
       }
     ],
     "similar_prior_cases": [
       "CC-1475",
+      "CC-1523",
       "CC-3216",
+      "CC-3498",
+      "CC-3734",
       "CC-3761",
-      "CC-4294"
+      "CC-4021",
+      "CC-4294",
+      "CC-4395"
     ],
     "summary": "Assessed as account takeover at 92% confidence. Bank risk model scored this transaction 0.76 (an input, discounted per policy since high scores are often legitimate). Customer denied making the transaction. Case-memory prior adjustment: +0.20 from this card's own closed-case history. Exposure $35.66 across 1 transaction(s).",
     "written_to_graph": true,
@@ -377,5 +394,5 @@
   "stop_reason": "Simulated verification response settled the verdict; no further evidence would change the action.",
   "tool_calls": 7,
   "tokens": 0,
-  "latency_s": 2.45
+  "latency_s": 4.57
 }

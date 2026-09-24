@@ -56,14 +56,14 @@
         "entity_ids": []
       },
       {
-        "claim": "GSQL traversal found 4 closed case(s) directly on or connected to this card (source: graph): CC-0696 (cleared/none), CC-3778 (confirmed_fraud/card_not_present_fraud), CC-2121 (confirmed_fraud/card_not_present_fraud), CC-1736 (confirmed_fraud/card_not_present_fraud)",
+        "claim": "GSQL traversal found 4 closed case(s) directly on or connected to this card (source: graph): CC-0696 (cleared/none), CC-1736 (confirmed_fraud/card_not_present_fraud), CC-3778 (confirmed_fraud/card_not_present_fraud), CC-2121 (confirmed_fraud/card_not_present_fraud)",
         "source": "graph",
         "ref": "query:similar_closed_cases_graph(card_id=C08106-K1)",
         "entity_ids": [
           "CC-0696",
+          "CC-1736",
           "CC-3778",
-          "CC-2121",
-          "CC-1736"
+          "CC-2121"
         ]
       },
       {
@@ -76,12 +76,29 @@
           "CC-2121",
           "CC-3778"
         ]
+      },
+      {
+        "claim": "GraphRAG retrieval (TF-IDF over closed-case narratives) surfaced 5 case(s) describing similar activity, independent of card/device/region overlap: CC-3532 (sim=0.26, confirmed_fraud/card_not_present_new_device), CC-0584 (sim=0.228, confirmed_fraud/card_not_present_fraud), CC-1490 (sim=0.224, cleared/none), CC-1396 (sim=0.219, cleared/none), CC-1024 (sim=0.218, cleared/none)",
+        "source": "document",
+        "ref": "query:narrative_retrieval(closed_cases_history.analyst_notes)",
+        "entity_ids": [
+          "CC-3532",
+          "CC-0584",
+          "CC-1490",
+          "CC-1396",
+          "CC-1024"
+        ]
       }
     ],
     "similar_prior_cases": [
+      "CC-0584",
       "CC-0696",
+      "CC-1024",
+      "CC-1396",
+      "CC-1490",
       "CC-1736",
       "CC-2121",
+      "CC-3532",
       "CC-3778"
     ],
     "summary": "Assessed as card not present new device at 98% confidence. Customer proactively reported the transaction: \"Customer C08106 message: 'I never made this $128.33 purchase. Please check my card.' Refers to 3583227.\". Amount is a 3.4-sigma outlier vs. this customer's history; 8 transactions on this card within 48 hours; from a device profile marked New for this account. 4 other card(s) share this transaction's device profile. Exposure $128.33 across 1 transaction(s).",
@@ -157,5 +174,5 @@
   "stop_reason": "Fraud probability 0.98 >= 0.85 with corroborating evidence.",
   "tool_calls": 6,
   "tokens": 0,
-  "latency_s": 3.84
+  "latency_s": 5.31
 }

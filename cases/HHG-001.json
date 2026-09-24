@@ -29,12 +29,12 @@
         "entity_ids": []
       },
       {
-        "claim": "GSQL traversal found 4 closed case(s) directly on or connected to this card (source: graph): CC-1066 (confirmed_fraud/out_of_region_use), CC-2964 (confirmed_fraud/out_of_region_use), CC-3587 (confirmed_fraud/out_of_region_use), CC-1673 (confirmed_fraud/card_not_present_new_device)",
+        "claim": "GSQL traversal found 4 closed case(s) directly on or connected to this card (source: graph): CC-2964 (confirmed_fraud/out_of_region_use), CC-1066 (confirmed_fraud/out_of_region_use), CC-3587 (confirmed_fraud/out_of_region_use), CC-1673 (confirmed_fraud/card_not_present_new_device)",
         "source": "graph",
         "ref": "query:similar_closed_cases_graph(card_id=C12382-K1)",
         "entity_ids": [
-          "CC-1066",
           "CC-2964",
+          "CC-1066",
           "CC-3587",
           "CC-1673"
         ]
@@ -50,13 +50,30 @@
           "CC-3587",
           "CC-4431"
         ]
+      },
+      {
+        "claim": "GraphRAG retrieval (TF-IDF over closed-case narratives) surfaced 5 case(s) describing similar activity, independent of card/device/region overlap: CC-1784 (sim=0.261, cleared/none), CC-0156 (sim=0.258, confirmed_fraud/out_of_region_use), CC-1389 (sim=0.257, cleared/none), CC-0978 (sim=0.256, confirmed_fraud/out_of_region_use), CC-4316 (sim=0.253, cleared/none)",
+        "source": "document",
+        "ref": "query:narrative_retrieval(closed_cases_history.analyst_notes)",
+        "entity_ids": [
+          "CC-1784",
+          "CC-0156",
+          "CC-1389",
+          "CC-0978",
+          "CC-4316"
+        ]
       }
     ],
     "similar_prior_cases": [
+      "CC-0156",
+      "CC-0978",
       "CC-1066",
+      "CC-1389",
       "CC-1673",
+      "CC-1784",
       "CC-2964",
       "CC-3587",
+      "CC-4316",
       "CC-4431"
     ],
     "summary": "Assessed as out of region use at 92% confidence. Bank risk model scored this transaction 0.61 (an input, discounted per policy since high scores are often legitimate). Customer denied making the transaction. Case-memory prior adjustment: +0.20 from this card's own closed-case history. Exposure $77.07 across 1 transaction(s).",
@@ -103,5 +120,5 @@
   "stop_reason": "Simulated verification response settled the verdict; no further evidence would change the action.",
   "tool_calls": 7,
   "tokens": 0,
-  "latency_s": 3.36
+  "latency_s": 5.65
 }

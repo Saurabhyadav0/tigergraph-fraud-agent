@@ -100,7 +100,7 @@ def investigate_case(store: TransactionStore, graph: GraphClient, case_row: dict
     bank_risk_score = case_row.get("risk_score")
     bank_risk_score = float(bank_risk_score) if bank_risk_score not in (None, "") and bank_risk_score == bank_risk_score else None
 
-    ev = gather(store, graph, flagged_txn_id, card_id, customer_id)
+    ev = gather(store, graph, flagged_txn_id, card_id, customer_id, trigger_text=trigger_text)
     tool_calls += 5  # get_transaction, card_window, device_neighbors, region_neighbors, similar_closed_cases
 
     initial_assessment, t = _assess(ev, trigger_type, trigger_text, bank_risk_score, "before_additional_evidence")

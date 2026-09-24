@@ -43,10 +43,27 @@
         "entity_ids": [
           "CC-4160"
         ]
+      },
+      {
+        "claim": "GraphRAG retrieval (TF-IDF over closed-case narratives) surfaced 5 case(s) describing similar activity, independent of card/device/region overlap: CC-1142 (sim=0.296, cleared/none), CC-0393 (sim=0.296, cleared/none), CC-3416 (sim=0.291, cleared/none), CC-0628 (sim=0.261, cleared/none), CC-4691 (sim=0.246, cleared/none)",
+        "source": "document",
+        "ref": "query:narrative_retrieval(closed_cases_history.analyst_notes)",
+        "entity_ids": [
+          "CC-1142",
+          "CC-0393",
+          "CC-3416",
+          "CC-0628",
+          "CC-4691"
+        ]
       }
     ],
     "similar_prior_cases": [
-      "CC-4160"
+      "CC-0393",
+      "CC-0628",
+      "CC-1142",
+      "CC-3416",
+      "CC-4160",
+      "CC-4691"
     ],
     "summary": "Assessed as card not present fraud at 90% confidence. Bank risk model scored this transaction 0.79 (an input, discounted per policy since high scores are often legitimate). Amount is a 10.4-sigma outlier vs. this customer's history. Case-memory prior adjustment: +0.20 from this card's own closed-case history. Exposure $292.36 across 1 transaction(s).",
     "written_to_graph": true,
@@ -91,5 +108,5 @@
   "stop_reason": "Fraud probability 0.90 >= 0.85 with corroborating evidence.",
   "tool_calls": 6,
   "tokens": 0,
-  "latency_s": 3.14
+  "latency_s": 2.95
 }

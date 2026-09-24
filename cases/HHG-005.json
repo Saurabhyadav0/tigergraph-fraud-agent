@@ -176,13 +176,30 @@
           "CC-4613",
           "CC-4625"
         ]
+      },
+      {
+        "claim": "GraphRAG retrieval (TF-IDF over closed-case narratives) surfaced 5 case(s) describing similar activity, independent of card/device/region overlap: CC-3105 (sim=0.46, cleared/none), CC-1024 (sim=0.422, cleared/none), CC-0992 (sim=0.416, cleared/none), CC-1008 (sim=0.416, cleared/none), CC-1600 (sim=0.415, cleared/none)",
+        "source": "document",
+        "ref": "query:narrative_retrieval(closed_cases_history.analyst_notes)",
+        "entity_ids": [
+          "CC-3105",
+          "CC-1024",
+          "CC-0992",
+          "CC-1008",
+          "CC-1600"
+        ]
       }
     ],
     "similar_prior_cases": [
+      "CC-0992",
+      "CC-1008",
+      "CC-1024",
+      "CC-1600",
+      "CC-1672",
       "CC-2400",
       "CC-2717",
       "CC-2857",
-      "CC-1672",
+      "CC-3105",
       "CC-4571",
       "CC-4583",
       "CC-4613",
@@ -227,5 +244,5 @@
   "stop_reason": "Simulated verification response settled the verdict; no further evidence would change the action.",
   "tool_calls": 7,
   "tokens": 0,
-  "latency_s": 3.63
+  "latency_s": 4.94
 }

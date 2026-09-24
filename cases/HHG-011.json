@@ -78,8 +78,8 @@
           "CC-2799",
           "CC-2673",
           "CC-0290",
-          "CC-0031",
           "CC-3206",
+          "CC-0031",
           "CC-3039"
         ]
       },
@@ -97,17 +97,34 @@
           "CC-3039",
           "CC-3206"
         ]
+      },
+      {
+        "claim": "GraphRAG retrieval (TF-IDF over closed-case narratives) surfaced 5 case(s) describing similar activity, independent of card/device/region overlap: CC-3749 (sim=0.323, confirmed_fraud/card_not_present_new_device), CC-4971 (sim=0.269, cleared/none), CC-2285 (sim=0.269, cleared/none), CC-4473 (sim=0.264, cleared/none), CC-1490 (sim=0.246, cleared/none)",
+        "source": "document",
+        "ref": "query:narrative_retrieval(closed_cases_history.analyst_notes)",
+        "entity_ids": [
+          "CC-3749",
+          "CC-4971",
+          "CC-2285",
+          "CC-4473",
+          "CC-1490"
+        ]
       }
     ],
     "similar_prior_cases": [
       "CC-0031",
       "CC-0290",
       "CC-1056",
+      "CC-1490",
       "CC-2247",
+      "CC-2285",
       "CC-2673",
       "CC-2799",
       "CC-3039",
-      "CC-3206"
+      "CC-3206",
+      "CC-3749",
+      "CC-4473",
+      "CC-4971"
     ],
     "summary": "Assessed as card not present new device at 98% confidence. Customer proactively reported the transaction: \"Customer C11923 message: 'I never made this $131.30 purchase. Please check my card.' Refers to 3583368.\". Amount is a 2.5-sigma outlier vs. this customer's history; 84 transactions on this card within 48 hours; from a device profile marked New for this account. 3 other card(s) share this transaction's device profile. Exposure $131.30 across 1 transaction(s).",
     "written_to_graph": true,
@@ -181,5 +198,5 @@
   "stop_reason": "Fraud probability 0.98 >= 0.85 with corroborating evidence.",
   "tool_calls": 6,
   "tokens": 0,
-  "latency_s": 10.14
+  "latency_s": 6.36
 }

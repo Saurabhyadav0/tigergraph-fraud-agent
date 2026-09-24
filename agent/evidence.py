@@ -12,6 +12,7 @@ from dataclasses import dataclass, field
 
 import pandas as pd
 
+from agent import graphrag
 from agent.transaction_store import TransactionStore
 
 
@@ -43,6 +44,7 @@ class CaseEvidence:
     same_card_closed_cases: list[dict]    # narrow: this exact card's own history -- safe for probability adjustment
     ring_device_cards: list[str] = field(default_factory=list)   # other cards on the exact same device fingerprint
     ring_region_cards: list[str] = field(default_factory=list)   # other cards in-region WITH their own fraud history
+    narrative_similar_cases: list[dict] = field(default_factory=list)  # GraphRAG: similar analyst narratives, no structural overlap required
     items: list[EvidenceItem] = field(default_factory=list)
 
     def add(self, claim: str, source: str, ref: str, entity_ids: list[str] = None):
@@ -63,7 +65,8 @@ def _similar_closed_cases(store: TransactionStore, card_id: str, device_profile_
     return ranked[["case_id", "outcome", "pattern", "exposure_usd", "analyst_notes"]].to_dict("records") if len(ranked) else []
 
 
-def gather(store: TransactionStore, graph, flagged_txn_id: str, card_id: str, customer_id: str) -> CaseEvidence:
+def gather(store: TransactionStore, graph, flagged_txn_id: str, card_id: str, customer_id: str,
+           trigger_text: str = "") -> CaseEvidence:
     txn = store.get_transaction(flagged_txn_id)
     channel = txn.get("channel", "")
     dev_id = txn.get("device_profile_id")
@@ -141,6 +144,21 @@ def gather(store: TransactionStore, graph, flagged_txn_id: str, card_id: str, cu
                 ring_region_cards.append(c)
     ring_region_cards = sorted(set(ring_region_cards))
 
+    # GraphRAG: retrieve closed cases whose analyst narrative reads similarly
+    # to this transaction's own signature, independent of any card/device/
+    # region overlap -- catches "this looks like that other scam" even when
+    # nothing structurally connects the two.
+    query_parts = [trigger_text, channel, str(txn.get("ProductCD", ""))]
+    if is_new_device:
+        query_parts.append("new device")
+    if region is not None and not pd.isna(region) and region not in known_regions:
+        query_parts.append("billing region no history unfamiliar location")
+    narrative_hits = graphrag.get_retriever().retrieve(
+        " ".join(str(p) for p in query_parts),
+        top_k=5,
+        exclude_case_ids={c["case_id"] for c in same_card},
+    )
+
     ev = CaseEvidence(
         flagged_txn=txn, card_id=card_id, customer_id=customer_id, channel=channel,
         device_profile=dev_id, is_new_device=is_new_device,
@@ -150,6 +168,7 @@ def gather(store: TransactionStore, graph, flagged_txn_id: str, card_id: str, cu
         customer_known_products=known_products, amount_zscore=amount_zscore,
         similar_closed_cases=similar, same_card_closed_cases=same_card,
         ring_device_cards=ring_device_cards, ring_region_cards=ring_region_cards,
+        narrative_similar_cases=narrative_hits,
     )
 
     ev.add(
@@ -210,6 +229,15 @@ def gather(store: TransactionStore, graph, flagged_txn_id: str, card_id: str, cu
             f"Found {len(similar)} related closed case(s) in case memory (card/device/region blend): "
             + ", ".join(f"{c['case_id']} ({c['outcome']}/{c['pattern']})" for c in similar[:5]),
             "graph", "query:similar_closed_cases", [c["case_id"] for c in similar],
+        )
+
+    if narrative_hits:
+        ev.add(
+            f"GraphRAG retrieval (TF-IDF over closed-case narratives) surfaced {len(narrative_hits)} case(s) "
+            f"describing similar activity, independent of card/device/region overlap: "
+            + ", ".join(f"{c['case_id']} (sim={c['similarity']}, {c['outcome']}/{c['pattern']})" for c in narrative_hits),
+            "document", "query:narrative_retrieval(closed_cases_history.analyst_notes)",
+            [c["case_id"] for c in narrative_hits],
         )
 
     return ev
