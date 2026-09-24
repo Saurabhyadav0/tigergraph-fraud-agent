@@ -17,8 +17,13 @@ case_pack.csv row (trigger: risk_score | customer_report | analyst_request)
         |                              index over the full 590K transactions.csv +
         |                              144K identity.csv (card velocity, shared
         |                              device/region detection, customer history)
-        |                            - closed-case memory (TigerGraph edges +
-        |                              store-side fingerprint cross-referencing)
+        |                            - closed-case memory: a LIVE GSQL traversal
+        |                              against TigerGraph (graph/queries/
+        |                              similar_closed_cases.gsql), exposed both as
+        |                              a direct pyTigerGraph call (agent/graph_client.py,
+        |                              the low-latency path for a 20-case run) and
+        |                              as an MCP tool (agent/mcp_server.py, for any
+        |                              MCP-compatible agent/client)
         |
         +-- agent/assess.py           rule-based fraud assessment (or
         |   agent/llm_assess.py       agent/llm_assess.py -> Claude, when
@@ -51,6 +56,21 @@ data (13,553 customers, 13,568 cards), the full `closed_cases_history.csv` (5,56
 cases) as case memory, and an `InvestigationCase` vertex + edges for every case the
 agent actually investigates — written as it happens, exactly matching the brief's
 "write it into the graph... the next investigation should be able to find it."
+
+## TigerGraph MCP
+
+`agent/mcp_server.py` exposes two of the graph operations above as real MCP tools
+(built on the official `mcp` SDK, tested against the live instance):
+`similar_closed_cases(card_id)` (the GSQL traversal) and
+`write_investigation_case(answer_json)`. Run it standalone with
+`python -m agent.mcp_server`, or point any MCP client (Claude Desktop, `mcp dev`,
+another agent) at it to give it the same graph capabilities this pipeline uses.
+
+`agent/investigate.py`'s own loop calls `agent/graph_client.py` directly (a Python
+import, not a network hop, for a tight local loop over 20 cases) rather than
+round-tripping through its own MCP server — the MCP server is this project's
+integration surface for *other* agents/tools, exercising the same underlying
+`GraphClient` methods, not a second implementation of them.
 
 ## The pipeline in one run
 
